@@ -1,0 +1,48 @@
+﻿<Window x:Class="CathayScraperApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CathayScraperApp"
+        xmlns:presentation="clr-namespace:CathayScraperApp.Assets.Presentation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Row 0: BookingDetailEntry -->
+            <RowDefinition Height="Auto"/>  <!-- Row 1: Divider -->
+            <RowDefinition Height="Auto"/>  <!-- Row 2: Label for table -->
+            <RowDefinition Height="Auto"/>  <!-- Row 3: Table (DataGrid) -->
+            <RowDefinition Height="Auto"/>  <!-- Row 4: Debug TextBox -->
+            <RowDefinition Height="*"/>     <!-- Row 5: Results TextBoxes -->
+            <RowDefinition Height="Auto"/>  <!-- Row 6: Buttons -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- BookingDetailEntry UserControl -->
+        <presentation:BookingDetailEntry x:Name="BookingDetailEntry" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+        <!-- Divider -->
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"/>
+
+        <!-- Label for table -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Flights Being Scanned" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- Place the UserControl in your layout -->
+        <presentation:FlightDetailsDataGrid x:Name="FlightDetailsDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+        <!-- Debug Log TextBox -->
+        <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" Name="DebugTextBox" TextWrapping="Wrap" Text="Debug Logs" VerticalScrollBarVisibility="Auto" IsReadOnly="true"/>
+
+        <!-- Text Boxes for additional results -->
+        <TextBox Grid.Row="5" Grid.Column="0" Margin="10" Name="LeftResults" TextWrapping="Wrap" Text="Results" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="10" Name="RightResults" TextWrapping="Wrap" Text="Details" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+
+        <!-- Buttons for operations -->
+        <Button Grid.Row="6" Grid.Column="0" Click="LeftButtonClick" Name="LeftButton" Content="Start Scraping" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="1" Click="RightButtonClick" Name="RightButton" Content="Stop Scraping" Margin="5"/>
+    </Grid>
+</Window>

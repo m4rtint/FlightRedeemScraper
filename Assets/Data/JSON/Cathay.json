@@ -1,0 +1,733 @@
+{
+  "availabilities": {
+    "updateTime": "2024-04-26 23:00:00",
+    "std": [
+      {
+        "date": "20240426",
+        "availability": "NA"
+      },
+      {
+        "date": "20240427",
+        "availability": "NA"
+      },
+      {
+        "date": "20240428",
+        "availability": "NA"
+      },
+      {
+        "date": "20240429",
+        "availability": "NA"
+      },
+      {
+        "date": "20240430",
+        "availability": "NA"
+      },
+      {
+        "date": "20240501",
+        "availability": "NA"
+      },
+      {
+        "date": "20240502",
+        "availability": "NA"
+      },
+      {
+        "date": "20240503",
+        "availability": "NA"
+      },
+      {
+        "date": "20240504",
+        "availability": "NA"
+      },
+      {
+        "date": "20240505",
+        "availability": "NA"
+      },
+      {
+        "date": "20240506",
+        "availability": "NA"
+      },
+      {
+        "date": "20240507",
+        "availability": "NA"
+      },
+      {
+        "date": "20240508",
+        "availability": "NA"
+      },
+      {
+        "date": "20240509",
+        "availability": "NA"
+      },
+      {
+        "date": "20240510",
+        "availability": "NA"
+      },
+      {
+        "date": "20240511",
+        "availability": "NA"
+      },
+      {
+        "date": "20240512",
+        "availability": "NA"
+      },
+      {
+        "date": "20240513",
+        "availability": "NA"
+      },
+      {
+        "date": "20240514",
+        "availability": "NA"
+      },
+      {
+        "date": "20240515",
+        "availability": "NA"
+      },
+      {
+        "date": "20240516",
+        "availability": "NA"
+      },
+      {
+        "date": "20240517",
+        "availability": "NA"
+      },
+      {
+        "date": "20240518",
+        "availability": "NA"
+      },
+      {
+        "date": "20240519",
+        "availability": "NA"
+      },
+      {
+        "date": "20240520",
+        "availability": "NA"
+      },
+      {
+        "date": "20240521",
+        "availability": "NA"
+      },
+      {
+        "date": "20240522",
+        "availability": "NA"
+      },
+      {
+        "date": "20240523",
+        "availability": "NA"
+      },
+      {
+        "date": "20240524",
+        "availability": "NA"
+      },
+      {
+        "date": "20240525",
+        "availability": "NA"
+      },
+      {
+        "date": "20240526",
+        "availability": "NA"
+      },
+      {
+        "date": "20240527",
+        "availability": "NA"
+      },
+      {
+        "date": "20240528",
+        "availability": "NA"
+      },
+      {
+        "date": "20240529",
+        "availability": "NA"
+      },
+      {
+        "date": "20240530",
+        "availability": "NA"
+      },
+      {
+        "date": "20240531",
+        "availability": "NA"
+      },
+      {
+        "date": "20240601",
+        "availability": "NA"
+      },
+      {
+        "date": "20240602",
+        "availability": "NA"
+      },
+      {
+        "date": "20240603",
+        "availability": "NA"
+      },
+      {
+        "date": "20240604",
+        "availability": "NA"
+      },
+      {
+        "date": "20240605",
+        "availability": "NA"
+      },
+      {
+        "date": "20240606",
+        "availability": "NA"
+      },
+      {
+        "date": "20240607",
+        "availability": "NA"
+      },
+      {
+        "date": "20240608",
+        "availability": "NA"
+      },
+      {
+        "date": "20240609",
+        "availability": "NA"
+      },
+      {
+        "date": "20240610",
+        "availability": "NA"
+      },
+      {
+        "date": "20240611",
+        "availability": "NA"
+      },
+      {
+        "date": "20240612",
+        "availability": "NA"
+      },
+      {
+        "date": "20240613",
+        "availability": "NA"
+      },
+      {
+        "date": "20240614",
+        "availability": "NA"
+      },
+      {
+        "date": "20240615",
+        "availability": "NA"
+      },
+      {
+        "date": "20240616",
+        "availability": "NA"
+      },
+      {
+        "date": "20240617",
+        "availability": "NA"
+      },
+      {
+        "date": "20240618",
+        "availability": "NA"
+      },
+      {
+        "date": "20240619",
+        "availability": "NA"
+      },
+      {
+        "date": "20240620",
+        "availability": "NA"
+      },
+      {
+        "date": "20240621",
+        "availability": "NA"
+      },
+      {
+        "date": "20240622",
+        "availability": "NA"
+      },
+      {
+        "date": "20240623",
+        "availability": "NA"
+      },
+      {
+        "date": "20240624",
+        "availability": "NA"
+      },
+      {
+        "date": "20240625",
+        "availability": "NA"
+      },
+      {
+        "date": "20240626",
+        "availability": "NA"
+      },
+      {
+        "date": "20240627",
+        "availability": "NA"
+      },
+      {
+        "date": "20240628",
+        "availability": "NA"
+      },
+      {
+        "date": "20240629",
+        "availability": "NA"
+      },
+      {
+        "date": "20240630",
+        "availability": "NA"
+      },
+      {
+        "date": "20240701",
+        "availability": "NA"
+      },
+      {
+        "date": "20240702",
+        "availability": "NA"
+      },
+      {
+        "date": "20240703",
+        "availability": "NA"
+      },
+      {
+        "date": "20240704",
+        "availability": "NA"
+      },
+      {
+        "date": "20240705",
+        "availability": "NA"
+      },
+      {
+        "date": "20240706",
+        "availability": "NA"
+      },
+      {
+        "date": "20240707",
+        "availability": "NA"
+      },
+      {
+        "date": "20240708",
+        "availability": "NA"
+      },
+      {
+        "date": "20240709",
+        "availability": "NA"
+      },
+      {
+        "date": "20240710",
+        "availability": "NA"
+      },
+      {
+        "date": "20240711",
+        "availability": "NA"
+      },
+      {
+        "date": "20240712",
+        "availability": "NA"
+      },
+      {
+        "date": "20240713",
+        "availability": "NA"
+      },
+      {
+        "date": "20240714",
+        "availability": "NA"
+      },
+      {
+        "date": "20240715",
+        "availability": "NA"
+      },
+      {
+        "date": "20240716",
+        "availability": "NA"
+      },
+      {
+        "date": "20240717",
+        "availability": "NA"
+      },
+      {
+        "date": "20240718",
+        "availability": "NA"
+      },
+      {
+        "date": "20240719",
+        "availability": "NA"
+      },
+      {
+        "date": "20240720",
+        "availability": "NA"
+      },
+      {
+        "date": "20240721",
+        "availability": "NA"
+      },
+      {
+        "date": "20240722",
+        "availability": "NA"
+      },
+      {
+        "date": "20240723",
+        "availability": "NA"
+      },
+      {
+        "date": "20240724",
+        "availability": "NA"
+      },
+      {
+        "date": "20240725",
+        "availability": "NA"
+      },
+      {
+        "date": "20240726",
+        "availability": "NA"
+      },
+      {
+        "date": "20240727",
+        "availability": "NA"
+      },
+      {
+        "date": "20240728",
+        "availability": "NA"
+      },
+      {
+        "date": "20240729",
+        "availability": "NA"
+      },
+      {
+        "date": "20240730",
+        "availability": "NA"
+      },
+      {
+        "date": "20240731",
+        "availability": "NA"
+      },
+      {
+        "date": "20240801",
+        "availability": "NA"
+      },
+      {
+        "date": "20240802",
+        "availability": "NA"
+      },
+      {
+        "date": "20240803",
+        "availability": "NA"
+      },
+      {
+        "date": "20240804",
+        "availability": "NA"
+      },
+      {
+        "date": "20240805",
+        "availability": "NA"
+      },
+      {
+        "date": "20240806",
+        "availability": "NA"
+      },
+      {
+        "date": "20240807",
+        "availability": "NA"
+      },
+      {
+        "date": "20240808",
+        "availability": "NA"
+      },
+      {
+        "date": "20240809",
+        "availability": "NA"
+      },
+      {
+        "date": "20240810",
+        "availability": "NA"
+      },
+      {
+        "date": "20240811",
+        "availability": "NA"
+      },
+      {
+        "date": "20240812",
+        "availability": "NA"
+      },
+      {
+        "date": "20240813",
+        "availability": "NA"
+      },
+      {
+        "date": "20240814",
+        "availability": "NA"
+      },
+      {
+        "date": "20240815",
+        "availability": "NA"
+      },
+      {
+        "date": "20240816",
+        "availability": "NA"
+      },
+      {
+        "date": "20240817",
+        "availability": "NA"
+      },
+      {
+        "date": "20240818",
+        "availability": "NA"
+      },
+      {
+        "date": "20240819",
+        "availability": "NA"
+      },
+      {
+        "date": "20240820",
+        "availability": "NA"
+      },
+      {
+        "date": "20240821",
+        "availability": "NA"
+      },
+      {
+        "date": "20240822",
+        "availability": "NA"
+      },
+      {
+        "date": "20240823",
+        "availability": "NA"
+      },
+      {
+        "date": "20240824",
+        "availability": "NA"
+      },
+      {
+        "date": "20240825",
+        "availability": "NA"
+      },
+      {
+        "date": "20240826",
+        "availability": "NA"
+      },
+      {
+        "date": "20240827",
+        "availability": "NA"
+      },
+      {
+        "date": "20240828",
+        "availability": "NA"
+      },
+      {
+        "date": "20240829",
+        "availability": "NA"
+      },
+      {
+        "date": "20240830",
+        "availability": "NA"
+      },
+      {
+        "date": "20240831",
+        "availability": "NA"
+      },
+      {
+        "date": "20240901",
+        "availability": "NA"
+      },
+      {
+        "date": "20240902",
+        "availability": "NA"
+      },
+      {
+        "date": "20240903",
+        "availability": "NA"
+      },
+      {
+        "date": "20240904",
+        "availability": "NA"
+      },
+      {
+        "date": "20240905",
+        "availability": "NA"
+      },
+      {
+        "date": "20240906",
+        "availability": "NA"
+      },
+      {
+        "date": "20240907",
+        "availability": "NA"
+      },
+      {
+        "date": "20240908",
+        "availability": "NA"
+      },
+      {
+        "date": "20240909",
+        "availability": "NA"
+      },
+      {
+        "date": "20240910",
+        "availability": "NA"
+      },
+      {
+        "date": "20240911",
+        "availability": "NA"
+      },
+      {
+        "date": "20240912",
+        "availability": "L"
+      },
+      {
+        "date": "20240913",
+        "availability": "NA"
+      },
+      {
+        "date": "20240914",
+        "availability": "NA"
+      },
+      {
+        "date": "20240915",
+        "availability": "NA"
+      },
+      {
+        "date": "20240916",
+        "availability": "NA"
+      },
+      {
+        "date": "20240917",
+        "availability": "L"
+      },
+      {
+        "date": "20240918",
+        "availability": "H"
+      },
+      {
+        "date": "20240919",
+        "availability": "L"
+      },
+      {
+        "date": "20240920",
+        "availability": "NA"
+      },
+      {
+        "date": "20240921",
+        "availability": "NA"
+      },
+      {
+        "date": "20240922",
+        "availability": "NA"
+      },
+      {
+        "date": "20240923",
+        "availability": "NA"
+      },
+      {
+        "date": "20240924",
+        "availability": "L"
+      },
+      {
+        "date": "20240925",
+        "availability": "NA"
+      },
+      {
+        "date": "20240926",
+        "availability": "NA"
+      },
+      {
+        "date": "20240927",
+        "availability": "NA"
+      },
+      {
+        "date": "20240928",
+        "availability": "NA"
+      },
+      {
+        "date": "20240929",
+        "availability": "L"
+      },
+      {
+        "date": "20240930",
+        "availability": "NA"
+      },
+      {
+        "date": "20241001",
+        "availability": "H"
+      },
+      {
+        "date": "20241002",
+        "availability": "H"
+      },
+      {
+        "date": "20241003",
+        "availability": "H"
+      },
+      {
+        "date": "20241004",
+        "availability": "H"
+      },
+      {
+        "date": "20241005",
+        "availability": "H"
+      },
+      {
+        "date": "20241006",
+        "availability": "H"
+      },
+      {
+        "date": "20241007",
+        "availability": "H"
+      },
+      {
+        "date": "20241008",
+        "availability": "H"
+      },
+      {
+        "date": "20241009",
+        "availability": "H"
+      },
+      {
+        "date": "20241010",
+        "availability": "H"
+      },
+      {
+        "date": "20241011",
+        "availability": "L"
+      },
+      {
+        "date": "20241012",
+        "availability": "H"
+      },
+      {
+        "date": "20241013",
+        "availability": "H"
+      },
+      {
+        "date": "20241014",
+        "availability": "H"
+      },
+      {
+        "date": "20241015",
+        "availability": "H"
+      },
+      {
+        "date": "20241016",
+        "availability": "H"
+      },
+      {
+        "date": "20241017",
+        "availability": "H"
+      },
+      {
+        "date": "20241018",
+        "availability": "NA"
+      },
+      {
+        "date": "20241019",
+        "availability": "L"
+      },
+      {
+        "date": "20241020",
+        "availability": "H"
+      },
+      {
+        "date": "20241021",
+        "availability": "H"
+      },
+      {
+        "date": "20241022",
+        "availability": "H"
+      },
+      {
+        "date": "20241023",
+        "availability": "H"
+      }
+    ],
+    "pt1": [],
+    "pt2": []
+  }
+}
