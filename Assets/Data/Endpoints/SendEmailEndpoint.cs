@@ -4,7 +4,6 @@ using System.Text;
 
 public class SendEmailEndpont
 {
-    private const string MAILGUN_API_KEY = "XXXXXXXXXXXXXXXXXXX";
     private const string MAILGUN_DOMAIN = "martinproto.com";
     private const string MAILGUN_API_URL = "https://api.mailgun.net/v3/";
 
@@ -13,7 +12,8 @@ public class SendEmailEndpont
         using (var client = new HttpClient())
         {
             // Set up basic authentication
-            var authHeader = Convert.ToBase64String(Encoding.ASCII.GetBytes("api:" + MAILGUN_API_KEY));
+            string apiKey = Environment.GetEnvironmentVariable("MailGun-ApiKey", EnvironmentVariableTarget.User);
+            var authHeader = Convert.ToBase64String(Encoding.ASCII.GetBytes("api:" + apiKey));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
 
             // Construct the form data

@@ -7,7 +7,7 @@ public partial class MainWindow
 {
     private readonly SimpleStorage _mockStorage = new("mock");
 
-    private void TestSendEmailButtonClick(object sender, RoutedEventArgs e)
+    private void TestSendEmail()
     {
         var api = new MailAPI();
         var mailRepository = new MailRepository(api);
