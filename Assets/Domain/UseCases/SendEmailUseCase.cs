@@ -1,26 +1,18 @@
-﻿public class SendEmailUseCase
-{
-    private const string EMAIL = "m4rtin.t@gmail.com";
-    private const string SUBJECT = "FOUND SEATS ON DAY";
-    private readonly RateLimitEmail _rateLimitEmail;
-    private readonly MailRepository _repository;
+﻿namespace CathayScraperApp.Assets.Domain.UseCases;
 
-    public SendEmailUseCase(MailRepository repository, RateLimitEmail rateLimitEmail)
+public class SendEmailUseCase(MailRepository repository)
+{
+    private const string Subject = "Flight Scraper Test Email";
+
+    public void Execute(string email, string subject, string message)
     {
-        _repository = repository;
-        _rateLimitEmail = rateLimitEmail;
+        repository.SendMail(email, subject, message);
     }
 
-    public void Execute(string message)
+    public void ExecuteTest(string email)
     {
-        if (_rateLimitEmail.CanEmail())
-        {
-            _repository.SendMail(EMAIL, SUBJECT, message);
-            _rateLimitEmail.UpdateLastSentEmailTime();
-        }
-        else
-        {
-            DebugLogger.Log("Error: Rate limit exceeded.");
-        }
+        string currentTime = DateTime.Now.ToString("f"); // e.g., "Sunday, September 29, 2024 6:45 PM"
+        string message = $"Hello,\n\nThis is a test email sent to {email} on {currentTime}.\n\nBest regards,\nFlight Scraper Team";
+        repository.SendMail(email, Subject, message);
     }
 }

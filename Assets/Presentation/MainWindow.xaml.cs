@@ -2,6 +2,8 @@
 using CathayDomain;
 using CathayScraperApp.Assets.Data;
 using CathayScraperApp.Assets.Data.Repository;
+using CathayScraperApp.Assets.Domain;
+using CathayScraperApp.Assets.Domain.UseCases;
 
 namespace CathayScraperApp;
 
@@ -29,6 +31,7 @@ public partial class MainWindow : Window
     {
         BookingDetailEntry.OnAddFlight = HandleOnAddFlight;
         FlightDetailsDataGrid.OnDeleteFlight = HandleOnDeleteFlight;
+        FlightDetailsDataGrid.OnTestSendEmail = HandleTestSendEmail;
     }
 
     private async void HandleOnAddFlight(FlightEntryToScanRequest flightEntryToScanRequest)
@@ -40,6 +43,11 @@ public partial class MainWindow : Window
     {
         await viewModel.DeleteFlightEntryRequestAsync(id);
     }
+
+    private void HandleTestSendEmail(string email)
+    {
+        viewModel.TestSendEmail(email);
+    }
     
     private void SetupViewModel()
     {
@@ -48,9 +56,8 @@ public partial class MainWindow : Window
         var cathayRepository = new CathayRepository(cathayAPI);
         var getRedeemDataUseCase = new GetRedeemDataUseCase(cathayRepository);
 
-        var rateLimitEmail = new RateLimitEmail(5, 1, new SimpleStorage());
         var mailRepository = new MailRepository(new MailAPI());
-        var sendEmailUseCase = new SendEmailUseCase(mailRepository, rateLimitEmail);
+        var sendEmailUseCase = new SendEmailUseCase(mailRepository);
         var flightRequestRepository = new DefaultFlightRequestRepository(flightEntryAPI);
         var setFlightRequests = new AddFlightRequestUseCase(flightRequestRepository);
         var getFlightsToScan = new GetFlightsToScanUseCase(flightRequestRepository);
@@ -96,7 +103,7 @@ public partial class MainWindow : Window
         FlightDetailsDataGrid.SetDetails(state.FlightToScanRows);
     }
 
-    private void LeftButtonClick(object sender, RoutedEventArgs e)
+    private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         /*
         CabinClassPicker.IsEnabled = false;
@@ -115,7 +122,7 @@ public partial class MainWindow : Window
     /*
      * Change combo box into a list of cabin classes you can tick
      */
-    private void RightButtonClick(object sender, RoutedEventArgs e)
+    private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         //CabinClassPicker.IsEnabled = true;
         // DepartingDatePicker.IsEnabled = true;

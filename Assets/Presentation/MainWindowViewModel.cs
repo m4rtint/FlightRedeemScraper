@@ -1,4 +1,5 @@
 ﻿using CathayDomain;
+using CathayScraperApp.Assets.Domain.UseCases;
 
 public class MainWindowViewModel
 {
@@ -138,6 +139,11 @@ public class MainWindowViewModel
         var rowStates = _mainWindowPresentationMapper.MapInitialState(storedRows);
         State = _state.Apply(flightsToScanRows: rowStates);
     }
+    
+    public void TestSendEmail(string email)
+    {
+        _sendEmailUseCase.ExecuteTest(email);
+    }
  
     private void SendEmailIfNeeded(CathayRedeemData data, DateRange departingDateRange, DateRange returningDateRange)
     {
@@ -159,7 +165,7 @@ public class MainWindowViewModel
     {
         var message = dateTime.ToString("MMMM dd yyyy");
         DebugLogger.Log("Found Seats and Sending Email: " + message + prefix);
-        _sendEmailUseCase.Execute("Seats available on " + message + prefix);
+        //_sendEmailUseCase.Execute("Seats available on " + message + prefix);
     }
 
     ~MainWindowViewModel()

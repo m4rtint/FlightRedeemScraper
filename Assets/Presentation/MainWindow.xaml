@@ -42,7 +42,7 @@
         <TextBox Grid.Row="5" Grid.Column="1" Margin="10" Name="RightResults" TextWrapping="Wrap" Text="Details" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
 
         <!-- Buttons for operations -->
-        <Button Grid.Row="6" Grid.Column="0" Click="LeftButtonClick" Name="LeftButton" Content="Start Scraping" Margin="5"/>
-        <Button Grid.Row="6" Grid.Column="1" Click="RightButtonClick" Name="RightButton" Content="Stop Scraping" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="LeftButton" Content="Start Scraping" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="RightButton" Content="Stop Scraping" Margin="5"/>
     </Grid>
 </Window>

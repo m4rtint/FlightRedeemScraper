@@ -25,10 +25,4 @@
         </Page>
     </ItemGroup>
 
-    <ItemGroup>
-        <Compile Update="Assets\Presentation\MainWindow.TestEmailSend.cs">
-            <DependentUpon>MainWindow.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-
 </Project>

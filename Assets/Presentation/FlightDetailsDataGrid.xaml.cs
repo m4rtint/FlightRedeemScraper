@@ -6,6 +6,7 @@ namespace CathayScraperApp.Assets.Presentation;
 public partial class FlightDetailsDataGrid : UserControl
 {
     public Action<string> OnDeleteFlight;
+    public Action<string> OnTestSendEmail;
     
     public FlightDetailsDataGrid()
     {
@@ -27,5 +28,9 @@ public partial class FlightDetailsDataGrid : UserControl
 
     private void TestEmailButton_Click(object sender, RoutedEventArgs e)
     {
+        if (sender is Button { DataContext: FlightToScanRowState flight })
+        {
+            OnTestSendEmail?.Invoke(flight.Email);
+        }
     }
 }
