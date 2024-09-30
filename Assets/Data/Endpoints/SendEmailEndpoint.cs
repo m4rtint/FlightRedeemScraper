@@ -7,7 +7,7 @@ public class SendEmailEndpont
     private const string MAILGUN_DOMAIN = "martinproto.com";
     private const string MAILGUN_API_URL = "https://api.mailgun.net/v3/";
 
-    public async void SendEmail(string to, string subject, string body)
+    public async Task SendEmail(string to, string subject, string body)
     {
         using var client = new HttpClient();
         // Set up basic authentication

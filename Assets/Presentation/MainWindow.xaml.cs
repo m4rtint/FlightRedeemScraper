@@ -13,7 +13,7 @@ namespace CathayScraperApp;
 public partial class MainWindow : Window
 {
     private const int RepeatScrapeSeconds = 60 * 15;
-    private MainWindowViewModel viewModel;
+    private MainWindowViewModel _viewModel;
 
     public MainWindow()
     {
@@ -23,7 +23,7 @@ public partial class MainWindow : Window
         SetupBookingDetailEntry();
         Loaded += (sender, args) =>
         {
-            _ = viewModel?.LoadStoredFlightEntryRequest();
+            _ = _viewModel?.LoadStoredFlightEntryRequest();
         };
     }
     
@@ -36,17 +36,17 @@ public partial class MainWindow : Window
 
     private async void HandleOnAddFlight(FlightEntryToScanRequest flightEntryToScanRequest)
     {
-        await viewModel.AddFlightEntryRequestAsync(flightEntryToScanRequest);
+        await _viewModel.AddFlightEntryRequestAsync(flightEntryToScanRequest);
     }
 
     private async void HandleOnDeleteFlight(string id)
     {
-        await viewModel.DeleteFlightEntryRequestAsync(id);
+        await _viewModel.DeleteFlightEntryRequestAsync(id);
     }
 
-    private void HandleTestSendEmail(string email)
+    private async void HandleTestSendEmail(string email)
     {
-        viewModel.TestSendEmail(email);
+        await _viewModel.TestSendEmail(email);
     }
     
     private void SetupViewModel()
@@ -63,7 +63,7 @@ public partial class MainWindow : Window
         var getFlightsToScan = new GetFlightsToScanUseCase(flightRequestRepository);
         var deleteFlightRequestUseCase = new DeleteFlightRequestUseCase(flightRequestRepository);
         var presentationMapper = new MainWindowPresentationMapper();
-        viewModel = new MainWindowViewModel(
+        _viewModel = new MainWindowViewModel(
             getRedeemDataUseCase: getRedeemDataUseCase,
             sendEmailUseCase: sendEmailUseCase,
             dateMatchCheckerUseCase: new DateMatchCheckerUseCase(),
@@ -71,7 +71,7 @@ public partial class MainWindow : Window
             getFlightsToScanUseCase: getFlightsToScan,
             deleteFlightRequestUseCase: deleteFlightRequestUseCase,
             mainWindowPresentationMapper: presentationMapper);
-        viewModel.OnStateChanged += OnStateChanged;
+        _viewModel.OnStateChanged += OnStateChanged;
     }
 
     private void SetupDebugLog()
@@ -128,6 +128,6 @@ public partial class MainWindow : Window
         // DepartingDatePicker.IsEnabled = true;
         //ReturningDatePicker.IsEnabled = true;
         LeftButton.IsEnabled = true;
-        viewModel.StopScrape();
+        _viewModel.StopScrape();
     }
 }

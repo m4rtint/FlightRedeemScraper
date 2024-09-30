@@ -1,14 +1,7 @@
-﻿public class MailRepository
+﻿public class MailRepository(MailAPI api)
 {
-    private readonly MailAPI api;
-
-    public MailRepository(MailAPI api)
+    public async Task SendMail(string to, string subject, string message)
     {
-        this.api = api;
-    }
-
-    public void SendMail(string to, string subject, string message)
-    {
-        api.SendMail(to, subject, message);
+        await api.SendMail(to, subject, message);
     }
 }

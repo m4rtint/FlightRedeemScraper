@@ -24,7 +24,7 @@ public class MainWindowViewModel
         }
     }
     
-    public event Action<MainWindowState> OnStateChanged;
+    public event Action<MainWindowState>? OnStateChanged;
 
     public MainWindowViewModel(
         GetRedeemDataUseCase getRedeemDataUseCase,
@@ -140,9 +140,9 @@ public class MainWindowViewModel
         State = _state.Apply(flightsToScanRows: rowStates);
     }
     
-    public void TestSendEmail(string email)
+    public async Task TestSendEmail(string email)
     {
-        _sendEmailUseCase.ExecuteTest(email);
+        await _sendEmailUseCase.ExecuteTest(email);
     }
  
     private void SendEmailIfNeeded(CathayRedeemData data, DateRange departingDateRange, DateRange returningDateRange)
