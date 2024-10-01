@@ -112,4 +112,10 @@ public partial class BookingDetailEntry : UserControl
         
         OnAddFlight?.Invoke(entry);
     }
+
+    private void EmailInput_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var email = (sender as TextBox)?.Text;
+        AddFlightButton.IsEnabled = email != null && EmailChecker.IsValidEmail(email);
+    }
 }
