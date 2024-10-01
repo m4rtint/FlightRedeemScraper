@@ -2,7 +2,6 @@
 using CathayDomain;
 using CathayScraperApp.Assets.Data;
 using CathayScraperApp.Assets.Data.Repository;
-using CathayScraperApp.Assets.Domain;
 using CathayScraperApp.Assets.Domain.UseCases;
 using CathayScraperApp.Assets.Presentation;
 using CathayScraperApp.Assets.Presentation.Mappers;
@@ -14,8 +13,9 @@ namespace CathayScraperApp;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private const int RepeatScrapeSeconds = 60 * 15;
+    private const int RepeatScrapesInMinutes = 1;
     private MainWindowViewModel _viewModel;
+    private readonly Polling _polling;
 
     public MainWindow()
     {
@@ -27,6 +27,7 @@ public partial class MainWindow : Window
         {
             _ = _viewModel?.LoadStoredFlightEntryRequest();
         };
+        _polling = new Polling(intervalInMinutes: RepeatScrapesInMinutes);
     }
     
     private void SetupBookingDetailEntry()
@@ -107,13 +108,16 @@ public partial class MainWindow : Window
         FlightDetailsDataGrid.SetDetails(state.FlightToScanRows);
     }
 
-    private async void StartScrapingButtonClick(object sender, RoutedEventArgs e)
+    private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        await _viewModel.Scrape();
+        _polling.StartPolling(async () =>
+        {
+            await _viewModel.Scrape();
+        });
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        LeftButton.IsEnabled = true;
+        _polling.StopPolling();
     }
 }

@@ -10,7 +10,6 @@ public class MainWindowViewModel
     private readonly CheckAvailabilityUseCase _checkAvailabilityUseCase;
     private readonly GetRedeemDataUseCase _getRedeemDataUseCase;
     private readonly MainWindowPresentationMapper _mainWindowPresentationMapper;
-    private readonly Random _random;
     private readonly SendEmailUseCase _sendEmailUseCase;
     private readonly AddFlightRequestUseCase _addFlightUseCase;
     private readonly GetFlightsToScanUseCase _getFlightsToScanUseCase;
@@ -49,7 +48,6 @@ public class MainWindowViewModel
         _mainWindowPresentationMapper = mainWindowPresentationMapper;
         _emailMessageBuilder = emailMessageBuilder;
         _cancellationTokenSource = new CancellationTokenSource();
-        _random = new Random();
         State = MainWindowState.InitialState();
     }
 
