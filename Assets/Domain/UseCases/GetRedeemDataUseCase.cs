@@ -1,17 +1,12 @@
 ﻿using CathayDomain;
+using CathayScraperApp.Assets.Data.Repository;
 
-public class GetRedeemDataUseCase
+namespace CathayScraperApp.Assets.Domain.UseCases;
+
+public class GetRedeemDataUseCase(CathayRepository repository)
 {
-    private readonly CathayRepository _repository;
-
-    public GetRedeemDataUseCase(CathayRepository repository)
+    public async Task<CathayRedeemData?> Execute(FlightEntryToScanRequest request)
     {
-        _repository = repository;
-    }
-
-    public Task<CathayRedeemData?> Execute(CabinClass cabinClass)
-    {
-        var request = new CathayRedeemRequest(cabinClass);
-        return _repository.GetRedeemData(request);
+        return await repository.GetRedeemData(request);
     }
 }

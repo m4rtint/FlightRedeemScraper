@@ -6,7 +6,6 @@ public class GetFlightsToScanUseCase(IFlightRequestRepository repository)
 {
     public async Task<FlightEntryToScanRequest[]> Execute()
     {
-        var entries = await repository.GetEntries();
-        return entries;
+        return await repository.GetEntries();
     }
 }

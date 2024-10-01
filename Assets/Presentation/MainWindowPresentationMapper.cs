@@ -8,7 +8,8 @@ public class MainWindowPresentationMapper
             lastUpdatedTime: data.UpdateTime.ToString("yyyy-MM-dd"),
             availabilityToDestinationRows: MapToRows(data.AvailabilityDestination),
             availabilityReturnRows: MapToRows(data.AvailabilityReturn),
-            flightsToScanRows: []
+            flightsToScanRows: [],
+            scanRequests: []
         );
     }
     

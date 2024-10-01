@@ -1,7 +1,8 @@
 ﻿using System.IO;
+using CathayScraperApp.Assets.Data.DTO;
 using Newtonsoft.Json;
 
-public class MockCathayAPI : CathayAPI
+public class MockCathayAPI : ICathayApi
 {
     private const string baseDirectory = "C:\\Users\\th3in\\Documents\\CathayScraperApp";
     private const string fileName = "\\Assets\\Data\\JSON\\Cathay.json";

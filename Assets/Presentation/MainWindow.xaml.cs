@@ -4,6 +4,7 @@ using CathayScraperApp.Assets.Data;
 using CathayScraperApp.Assets.Data.Repository;
 using CathayScraperApp.Assets.Domain;
 using CathayScraperApp.Assets.Domain.UseCases;
+using CathayScraperApp.Assets.Presentation.Mappers;
 
 namespace CathayScraperApp;
 
@@ -51,7 +52,7 @@ public partial class MainWindow : Window
     
     private void SetupViewModel()
     {
-        var cathayAPI = new CathayAPIImpl();
+        var cathayAPI = new DefaultCathayApi();
         var flightEntryAPI = new FlightEntryAPI();
         var cathayRepository = new CathayRepository(cathayAPI);
         var getRedeemDataUseCase = new GetRedeemDataUseCase(cathayRepository);
@@ -63,14 +64,16 @@ public partial class MainWindow : Window
         var getFlightsToScan = new GetFlightsToScanUseCase(flightRequestRepository);
         var deleteFlightRequestUseCase = new DeleteFlightRequestUseCase(flightRequestRepository);
         var presentationMapper = new MainWindowPresentationMapper();
+        var emailMessageBuilder = new EmailMessageBuilder();
         _viewModel = new MainWindowViewModel(
             getRedeemDataUseCase: getRedeemDataUseCase,
             sendEmailUseCase: sendEmailUseCase,
-            dateMatchCheckerUseCase: new DateMatchCheckerUseCase(),
+            checkAvailabilityUseCase: new CheckAvailabilityUseCase(),
             addFlightRequestUseCase: setFlightRequests,
             getFlightsToScanUseCase: getFlightsToScan,
             deleteFlightRequestUseCase: deleteFlightRequestUseCase,
-            mainWindowPresentationMapper: presentationMapper);
+            mainWindowPresentationMapper: presentationMapper,
+            emailMessageBuilder: emailMessageBuilder);
         _viewModel.OnStateChanged += OnStateChanged;
     }
 
@@ -105,29 +108,11 @@ public partial class MainWindow : Window
 
     private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        /*
-        CabinClassPicker.IsEnabled = false;
-        DepartingDatePicker.IsEnabled = false;
-        ReturningDatePicker.IsEnabled = false;
-        LeftButton.IsEnabled = false;
-        _viewModel.StartScrape(
-            cabinClass: GetCabinClass(),
-            repeatSeconds: RepeatScrapeSeconds,
-            departingDateRange: DepartingDatePicker.GetDateRange(),
-            returningDateRange: ReturningDatePicker.GetDateRange());
-            */
+        
     }
-
-
-    /*
-     * Change combo box into a list of cabin classes you can tick
-     */
+    
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        //CabinClassPicker.IsEnabled = true;
-        // DepartingDatePicker.IsEnabled = true;
-        //ReturningDatePicker.IsEnabled = true;
         LeftButton.IsEnabled = true;
-        _viewModel.StopScrape();
     }
 }

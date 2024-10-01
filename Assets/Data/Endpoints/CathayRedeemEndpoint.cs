@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using CathayScraperApp.Assets.Data.DTO;
 using Newtonsoft.Json;
 
 public class CathayRedeemEndpoint

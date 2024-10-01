@@ -24,6 +24,12 @@ public struct FlightEntryToScanRequest
     public String Email;
 }
 
+public struct DateRange
+{
+    public DateTime FromDate { get; set; }  // Non-nullable DateTime for FromDate
+    public DateTime? ToDate { get; set; }   // Nullable DateTime for ToDate
+}
+
 public enum SeatsAvailability
 {
     NotAvailable,
@@ -39,8 +45,4 @@ public enum CabinClass
     Economy
 }
 
-public struct DateRange
-{
-    public DateTime FromDate { get; set; }  // Non-nullable DateTime for FromDate
-    public DateTime? ToDate { get; set; }   // Nullable DateTime for ToDate
-}
+

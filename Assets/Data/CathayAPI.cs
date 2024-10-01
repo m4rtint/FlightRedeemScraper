@@ -1,9 +1,11 @@
-﻿public interface CathayAPI
+﻿using CathayScraperApp.Assets.Data.DTO;
+
+public interface ICathayApi
 {
     Task<CathayDTO> GetCathayRedeem(string origin, string destination, string cabinClass);
 }
 
-public class CathayAPIImpl : CathayAPI
+public class DefaultCathayApi : ICathayApi
 {
     public Task<CathayDTO> GetCathayRedeem(string origin, string destination, string cabinClass)
     {

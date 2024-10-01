@@ -1,10 +1,11 @@
 ﻿using CathayDomain;
 using CathayScraperApp.Assets.Domain.UseCases;
+using CathayScraperApp.Assets.Presentation.Mappers;
 
 public class MainWindowViewModel
 {
     private readonly CancellationTokenSource _cancellationTokenSource;
-    private readonly DateMatchCheckerUseCase _dateMatchCheckerUseCase;
+    private readonly CheckAvailabilityUseCase _checkAvailabilityUseCase;
     private readonly GetRedeemDataUseCase _getRedeemDataUseCase;
     private readonly MainWindowPresentationMapper _mainWindowPresentationMapper;
     private readonly Random _random;
@@ -12,12 +13,13 @@ public class MainWindowViewModel
     private readonly AddFlightRequestUseCase _addFlightUseCase;
     private readonly GetFlightsToScanUseCase _getFlightsToScanUseCase;
     private readonly DeleteFlightRequestUseCase _deleteFlightRequestUseCase;
+    private readonly EmailMessageBuilder _emailMessageBuilder;
     private MainWindowState _state;
 
-    public MainWindowState State
+    private MainWindowState State
     {
         get => _state;
-        private set
+        set
         {
             OnStateChanged?.Invoke(value);
             _state = value;
@@ -29,72 +31,49 @@ public class MainWindowViewModel
     public MainWindowViewModel(
         GetRedeemDataUseCase getRedeemDataUseCase,
         SendEmailUseCase sendEmailUseCase,
-        DateMatchCheckerUseCase dateMatchCheckerUseCase,
+        CheckAvailabilityUseCase checkAvailabilityUseCase,
         AddFlightRequestUseCase addFlightRequestUseCase,
         GetFlightsToScanUseCase getFlightsToScanUseCase,
         DeleteFlightRequestUseCase deleteFlightRequestUseCase,
-        MainWindowPresentationMapper mainWindowPresentationMapper)
+        MainWindowPresentationMapper mainWindowPresentationMapper,
+        EmailMessageBuilder emailMessageBuilder)
     {
         _getRedeemDataUseCase = getRedeemDataUseCase;
         _sendEmailUseCase = sendEmailUseCase;
-        _dateMatchCheckerUseCase = dateMatchCheckerUseCase;
+        _checkAvailabilityUseCase = checkAvailabilityUseCase;
         _addFlightUseCase = addFlightRequestUseCase;
         _getFlightsToScanUseCase = getFlightsToScanUseCase;
         _deleteFlightRequestUseCase = deleteFlightRequestUseCase;
         _mainWindowPresentationMapper = mainWindowPresentationMapper;
+        _emailMessageBuilder = emailMessageBuilder;
         _cancellationTokenSource = new CancellationTokenSource();
         _random = new Random();
         State = MainWindowState.InitialState();
     }
-    
-    public async void StartScrape(
-        CabinClass cabinClass,
-        DateRange departingDateRange,
-        DateRange returningDateRange,
-        int repeatSeconds = 30)
+
+    public async Task Scrape()
     {
-        DebugLogger.Log("Start Scrape");
-        try
+        DebugLogger.Log("Scraping...");
+        var flightEntryRequests = await _getFlightsToScanUseCase.Execute();
+        foreach (var request in flightEntryRequests)
         {
-            await Task.Run(() =>
+            try
             {
-                PeriodicAsync(
-                    async () =>
-                    {
-                        _getRedeemDataUseCase.Execute(cabinClass).ContinueWith(task =>
-                        {
-                            DebugLogger.Log("Scraping...");
-                            _state = _mainWindowPresentationMapper.MapToState(task.Result);
-                            State = _state;
-                            SendEmail(task.Result, departingDateRange, returningDateRange);
-                        });
-                    },
-                    TimeSpan.FromSeconds(repeatSeconds),
-                    _cancellationTokenSource.Token);
-            });
+                var data = await _getRedeemDataUseCase.Execute(request);
+                if (data != null)
+                {
+                    await SendEmail(data, request);
+                }
+                else
+                {
+                    DebugLogger.Log("Cathay Fetch Data returned Null");
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"Error processing request {request}: {ex.Message}");
+            }
         }
-        catch (Exception e)
-        {
-            DebugLogger.Log(e.Message);
-        }
-    }
-
-    private async Task PeriodicAsync(Func<Task> action, TimeSpan interval, CancellationToken cancellationToken)
-    {
-        while (true)
-        {
-            await action();
-            var jitter = _random.NextDouble();
-            var randomMinutes = TimeSpan.FromMinutes(10 * jitter);
-            DebugLogger.Log("Waiting...Extra " + randomMinutes + " Minutes");
-            await Task.Delay(interval + randomMinutes, cancellationToken);
-        }
-    }
-
-    public void StopScrape()
-    {
-        DebugLogger.Log("Stop Scrape");
-        _cancellationTokenSource.Cancel();
     }
     
     public async Task AddFlightEntryRequestAsync(FlightEntryToScanRequest toScanRequest)
@@ -145,28 +124,23 @@ public class MainWindowViewModel
         await _sendEmailUseCase.ExecuteTest(email);
     }
  
-    private void SendEmail(CathayRedeemData data, DateRange departingDateRange, DateRange returningDateRange)
+    private async Task SendEmail(CathayRedeemData data, FlightEntryToScanRequest request)
     {
-        if (_dateMatchCheckerUseCase.Execute(
-                departingDateRange,
-                data.AvailabilityDestination,
-                out var departureAvailable)) 
-            SendEmail(departureAvailable, "|| Departing To HK");
-
-        if (_dateMatchCheckerUseCase.Execute(
-                returningDateRange,
-                data.AvailabilityReturn,
-            out var returnAvailable))
-            SendEmail(returnAvailable, "|| Returning To YVR");
+        var departures = _checkAvailabilityUseCase.Execute(request.DepartingOn, data.AvailabilityDestination);
+        var returns = _checkAvailabilityUseCase.Execute(request.ReturningOn, data.AvailabilityReturn);
+        if (departures.Length > 0 || returns.Length > 0)
+        {
+            var message = _emailMessageBuilder.GenerateAvailabilityEmail(
+                email: request.Email, 
+                cabinClass: request.Cabin.ToString(),
+                departingFlights: departures, 
+                returningFlights: returns);
+            var subject = _emailMessageBuilder.GenerateAvailabilityEmailSubject(request.FromAirport, request.ToAirport, request.Cabin);
+            DebugLogger.Log("Found Seats and Sending Email: " + request.Email);
+            await _sendEmailUseCase.Execute(request.Email, subject, message);
+        }
     }
-
-    private void SendEmail(DateTime dateTime, string prefix)
-    {
-        var message = dateTime.ToString("MMMM dd yyyy");
-        DebugLogger.Log("Found Seats and Sending Email: " + message + prefix);
-        //_sendEmailUseCase.Execute("Seats available on " + message + prefix);
-    }
-
+    
     ~MainWindowViewModel()
     {
         _cancellationTokenSource.Cancel();
@@ -180,39 +154,45 @@ public struct MainWindowState
     public AvailabilityRowState[] AvailabilityToDestinationRows { get; }
     public AvailabilityRowState[] AvailabilityReturnRows { get; }
     public FlightToScanRowState[] FlightToScanRows { get; }
+    public FlightEntryToScanRequest[] ScanRequests { get; }
 
     public MainWindowState(
         string? lastUpdatedTime,
         AvailabilityRowState[] availabilityToDestinationRows,
         AvailabilityRowState[] availabilityReturnRows,
-        FlightToScanRowState[] flightsToScanRows)
+        FlightToScanRowState[] flightsToScanRows, 
+        FlightEntryToScanRequest[] scanRequests)
     {
         LastUpdatedTime = lastUpdatedTime;
         AvailabilityToDestinationRows = availabilityToDestinationRows;
         AvailabilityReturnRows = availabilityReturnRows;
         FlightToScanRows = flightsToScanRows;
+        ScanRequests = scanRequests;
     }
 
     public MainWindowState Apply(
         string? lastUpdatedTime = null,
         AvailabilityRowState[]? availabilityToDestinationRows = null,
         AvailabilityRowState[]? availabilityReturnRows = null,
-        FlightToScanRowState[]? flightsToScanRows = null)
+        FlightToScanRowState[]? flightsToScanRows = null,
+        FlightEntryToScanRequest[]? scanRequests = null)
     {
         return new MainWindowState(
             lastUpdatedTime ?? LastUpdatedTime,
             availabilityToDestinationRows ?? AvailabilityToDestinationRows,
             availabilityReturnRows ?? AvailabilityReturnRows,
-            flightsToScanRows ?? FlightToScanRows);
+            flightsToScanRows ?? FlightToScanRows, 
+            scanRequests ?? ScanRequests);
     }
     
     public static MainWindowState InitialState()
     {
         return new MainWindowState(
             lastUpdatedTime: null,
-            availabilityToDestinationRows: Array.Empty<AvailabilityRowState>(),
-            availabilityReturnRows: Array.Empty<AvailabilityRowState>(),
-            flightsToScanRows: Array.Empty<FlightToScanRowState>()
+            availabilityToDestinationRows: [],
+            availabilityReturnRows: [],
+            flightsToScanRows: [],
+            scanRequests: []
         );
     }
 }

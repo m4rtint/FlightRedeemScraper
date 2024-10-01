@@ -1,17 +1,35 @@
 ﻿using CathayDomain;
+using CathayScraperApp.Assets.Data.DTO;
 
-public class CathayRepository(CathayAPI api)
+namespace CathayScraperApp.Assets.Data.Repository;
+
+public class CathayRepository(ICathayApi api)
 {
-    public async Task<CathayRedeemData?> GetRedeemData(CathayRedeemRequest request)
+    private struct Constants
     {
+        public const string FirstClass = "fir";
+        public const string BusinessClass = "bus";
+        public const string PremiumEconomyClass = "pey";
+        public const string EconomyClass = "eco";
+        public const string NotAvailable = "NA";
+        public const string HighAmount = "H";
+        public const string LowAmount = "L";
+    }
+    
+    public async Task<CathayRedeemData?> GetRedeemData(FlightEntryToScanRequest request)
+    {
+        var origin = request.FromAirport.ToString();
+        var destination = request.ToAirport.ToString();
+        var cabin = MapToDTO(request.Cabin);
+        
         var resultsToDestination = await api.GetCathayRedeem(
-            Constants.Origin,
-            Constants.Destination,
-            request.CabinClass);
+            origin,
+            destination,
+            cabin);
         var resultsReturn = await api.GetCathayRedeem(
-            Constants.Destination,
-            Constants.Origin,
-            request.CabinClass);
+            destination,
+            origin,
+            cabin);
         return MapToDomain(resultsToDestination.availabilities, resultsReturn.availabilities);
     }
 
@@ -35,16 +53,35 @@ public class CathayRepository(CathayAPI api)
 
         return cathayRedeemData;
     }
+    
+    private string MapToDTO(CabinClass cabin)
+    {
+        switch (cabin)
+        {
+            case CabinClass.First:
+                return Constants.FirstClass;
+            case CabinClass.Business:
+                return Constants.BusinessClass;
+            case CabinClass.PremiumEconomy:
+                return Constants.PremiumEconomyClass;
+            case CabinClass.Economy:
+                return Constants.EconomyClass;
+            default:
+                DebugLogger.Log("Invalid Cabin Class: " + cabin);
+                throw new ArgumentOutOfRangeException(nameof(cabin), "Invalid or missing cabin class");
+        }
+    }
+
 
     private SeatsAvailability MapToDomain(string availability)
     {
         switch (availability)
         {
-            case "NA":
+            case Constants.NotAvailable:
                 return SeatsAvailability.NotAvailable;
-            case "H":
+            case Constants.HighAmount:
                 return SeatsAvailability.HighAmount;
-            case "L":
+            case Constants.LowAmount:
                 return SeatsAvailability.LowAmount;
             default:
                 return SeatsAvailability.NotAvailable;
@@ -71,11 +108,5 @@ public class CathayRepository(CathayAPI api)
         data.SeatsAvailability = MapToDomain(dto.availability);
 
         return data.SeatsAvailability == SeatsAvailability.NotAvailable ? null : data;
-    }
-
-    private struct Constants
-    {
-        public const string Origin = "YVR";
-        public const string Destination = "HKG";
     }
 }
