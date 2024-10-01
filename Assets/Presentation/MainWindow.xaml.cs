@@ -4,6 +4,7 @@ using CathayScraperApp.Assets.Data;
 using CathayScraperApp.Assets.Data.Repository;
 using CathayScraperApp.Assets.Domain;
 using CathayScraperApp.Assets.Domain.UseCases;
+using CathayScraperApp.Assets.Presentation;
 using CathayScraperApp.Assets.Presentation.Mappers;
 
 namespace CathayScraperApp;
@@ -106,9 +107,9 @@ public partial class MainWindow : Window
         FlightDetailsDataGrid.SetDetails(state.FlightToScanRows);
     }
 
-    private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
+    private async void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        
+        await _viewModel.Scrape();
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)

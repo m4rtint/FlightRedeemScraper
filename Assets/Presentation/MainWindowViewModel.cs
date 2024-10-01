@@ -2,6 +2,8 @@
 using CathayScraperApp.Assets.Domain.UseCases;
 using CathayScraperApp.Assets.Presentation.Mappers;
 
+namespace CathayScraperApp.Assets.Presentation;
+
 public class MainWindowViewModel
 {
     private readonly CancellationTokenSource _cancellationTokenSource;
@@ -130,14 +132,19 @@ public class MainWindowViewModel
         var returns = _checkAvailabilityUseCase.Execute(request.ReturningOn, data.AvailabilityReturn);
         if (departures.Length > 0 || returns.Length > 0)
         {
-            var message = _emailMessageBuilder.GenerateAvailabilityEmail(
+            var message = _emailMessageBuilder.GeneratePlainTextEmail(
+                email: request.Email, 
+                cabinClass: request.Cabin.ToString(),
+                departingFlights: departures, 
+                returningFlights: returns);
+            var htmlMessage = _emailMessageBuilder.GenerateHtmlEmail(
                 email: request.Email, 
                 cabinClass: request.Cabin.ToString(),
                 departingFlights: departures, 
                 returningFlights: returns);
             var subject = _emailMessageBuilder.GenerateAvailabilityEmailSubject(request.FromAirport, request.ToAirport, request.Cabin);
             DebugLogger.Log("Found Seats and Sending Email: " + request.Email);
-            await _sendEmailUseCase.Execute(request.Email, subject, message);
+            await _sendEmailUseCase.Execute(request.Email, subject, message, htmlMessage);
         }
     }
     

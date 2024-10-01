@@ -11,6 +11,7 @@ public static class DebugLogger
         //Current Date Time - hh:mm:ss dd/MM/yyyy
         var log = DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy") + " - " + message;
         Trace.WriteLine(log);
+        Console.WriteLine(log);
         circularBuffer.Add(log);
         OnLogChanged?.Invoke(circularBuffer.GetAll().ToArray());
     }

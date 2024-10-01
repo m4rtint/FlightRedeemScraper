@@ -7,12 +7,18 @@ public class SendEmailEndpont
     private const string MAILGUN_DOMAIN = "martinproto.com";
     private const string MAILGUN_API_URL = "https://api.mailgun.net/v3/";
 
-    public async Task SendEmail(string to, string subject, string body)
+    public async Task SendEmail(string to, string subject, string textBody, string? htmlBody = null) // htmlBody is optional
     {
         using var client = new HttpClient();
-        // Set up basic authentication
-        //TODO - Check if env variable is null
+        
+        // Get API key from environment variable
         string apiKey = Environment.GetEnvironmentVariable("MailGun-ApiKey", EnvironmentVariableTarget.User);
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            DebugLogger.Log("MailGun API key is not set.");
+            return;
+        }
+        
         var authHeader = Convert.ToBase64String(Encoding.ASCII.GetBytes("api:" + apiKey));
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
 
@@ -22,8 +28,14 @@ public class SendEmailEndpont
             new("from", "postmaster@" + MAILGUN_DOMAIN),
             new("to", to),
             new("subject", subject),
-            new("text", body)
+            new("text", textBody)  // Plain text version
         };
+
+        // Conditionally add the HTML body if provided
+        if (!string.IsNullOrEmpty(htmlBody))
+        {
+            formData.Add(new KeyValuePair<string, string>("html", htmlBody));
+        }
 
         // Encode the form data
         var encodedFormData = new FormUrlEncodedContent(formData);
@@ -35,10 +47,13 @@ public class SendEmailEndpont
 
             // Check if the request was successful
             if (response.IsSuccessStatusCode)
+            {
                 DebugLogger.Log($"Email sent successfully to {to}!");
+            }
             else
-                DebugLogger.Log(
-                    $"Failed to send email. Status code: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            {
+                DebugLogger.Log($"Failed to send email. Status code: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            }
         }
         catch (Exception ex)
         {

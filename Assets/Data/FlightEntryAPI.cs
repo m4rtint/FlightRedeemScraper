@@ -30,7 +30,6 @@ public class FlightEntryAPI
             // Deserialize the JSON string into an array of RedeemEntryRequestDTO
             var entries = JsonSerializer.Deserialize<RedeemEntryRequestDTO[]>(jsonString);
 
-            DebugLogger.Log("Flight entries retrieved successfully.");
             return entries ?? [];
         }
         catch (FileNotFoundException)

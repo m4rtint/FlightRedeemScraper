@@ -1,4 +1,5 @@
 ﻿using CathayDomain;
+using CathayScraperApp.Assets.Presentation;
 
 public class MainWindowPresentationMapper
 {

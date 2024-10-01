@@ -4,9 +4,9 @@ public class SendEmailUseCase(MailRepository repository)
 {
     private const string TestSubject = "Flight Scraper Test Email";
 
-    public async Task Execute(string email, string subject, string message)
+    public async Task Execute(string email, string subject, string message, string htmlMessage)
     {
-        await repository.SendMail(email, subject, message);
+        await repository.SendMail(email, subject, message, htmlMessage);
     }
 
     public async Task ExecuteTest(string email)
