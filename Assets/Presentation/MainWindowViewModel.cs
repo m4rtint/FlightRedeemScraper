@@ -66,7 +66,7 @@ public class MainWindowViewModel
                             DebugLogger.Log("Scraping...");
                             _state = _mainWindowPresentationMapper.MapToState(task.Result);
                             State = _state;
-                            SendEmailIfNeeded(task.Result, departingDateRange, returningDateRange);
+                            SendEmail(task.Result, departingDateRange, returningDateRange);
                         });
                     },
                     TimeSpan.FromSeconds(repeatSeconds),
@@ -145,19 +145,18 @@ public class MainWindowViewModel
         await _sendEmailUseCase.ExecuteTest(email);
     }
  
-    private void SendEmailIfNeeded(CathayRedeemData data, DateRange departingDateRange, DateRange returningDateRange)
+    private void SendEmail(CathayRedeemData data, DateRange departingDateRange, DateRange returningDateRange)
     {
-        if (departingDateRange.FromDate < DateTime.Now)
-        {
-            DebugLogger.Log("Date Passed, Stop Scraping");
-            StopScrape();
-            return;
-        }
+        if (_dateMatchCheckerUseCase.Execute(
+                departingDateRange,
+                data.AvailabilityDestination,
+                out var departureAvailable)) 
+            SendEmail(departureAvailable, "|| Departing To HK");
 
-        if (_dateMatchCheckerUseCase.Execute(departingDateRange, data.AvailabilityDestination,
-                out var departureAvailable)) SendEmail(departureAvailable, "|| Departing To HK");
-
-        if (_dateMatchCheckerUseCase.Execute(returningDateRange, data.AvailabilityReturn, out var returnAvailable))
+        if (_dateMatchCheckerUseCase.Execute(
+                returningDateRange,
+                data.AvailabilityReturn,
+            out var returnAvailable))
             SendEmail(returnAvailable, "|| Returning To YVR");
     }
 

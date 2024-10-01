@@ -86,10 +86,10 @@ public partial class MainWindow : Window
 
     private void OnStateChanged(MainWindowState state)
     {
-        Dispatcher.Invoke(() => { UpdateUI(state); });
+        Dispatcher.Invoke(() => { RenderState(state); });
     }
 
-    private void UpdateUI(MainWindowState state)
+    private void RenderState(MainWindowState state)
     {
         var leftResults = "";
         foreach (var item in state.AvailabilityToDestinationRows) leftResults += $"{item.Date} : {item.Availability}\n";
