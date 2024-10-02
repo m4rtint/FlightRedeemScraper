@@ -43,7 +43,7 @@
         <!-- Email Input Field and Label (Now in row 4) -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
             <TextBlock Text="Email:" FontSize="14" VerticalAlignment="Center" Margin="5" />
-            <TextBox Name="EmailInput" Width="200" VerticalAlignment="Center" TextChanged="EmailInput_TextChanged" />
+            <TextBox Name="EmailInput" Width="200" VerticalAlignment="Center" TextChanged="EmailInput_TextChanged"/>
         </StackPanel>
 
         <!-- Error Notification Row (Moved to row 5) -->

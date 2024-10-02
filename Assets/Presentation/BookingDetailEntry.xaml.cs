@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using CathayDomain;
 using CathayScraperApp.Assets.Presentation.Mappers;
@@ -14,7 +13,7 @@ public partial class BookingDetailEntry : UserControl
         public const string DepartingDatePickerTitle = "Departing On";
         public const string ReturningDatePickerTitle = "Returning On";
         public const string AirportChosenErrorMessage = "Departure and arrival airports must be different.";
-
+        public const string EmailErrorMessage = "Please enter a valid email address";
         public const string DatePickerErrorMessage =
             "Returning date must be after the departing date and within the departing date range.";
     }
@@ -140,34 +139,46 @@ public partial class BookingDetailEntry : UserControl
 
     private void AddFlightButtonClick(object sender, RoutedEventArgs e)
     {
-        var entry = new FlightEntryToScanRequest()
+        if (EmailChecker.IsValidEmail(EmailInput.Text))
         {
-            Id = Guid.NewGuid().ToString(),
-            FromAirport = TravelLocationPicker.SelectedFromAirport,
-            ToAirport = TravelLocationPicker.SelectedToAirport,
-            Cabin = GetCabinClassFromPicker(),
-            DepartingOn = DepartingDatePicker.GetDateRange(),
-            ReturningOn = ReturningDatePicker.GetDateRange(),
-            Email = EmailInput.Text,
-        };
-        
-        OnAddFlight?.Invoke(entry);
+            var entry = new FlightEntryToScanRequest()
+            {
+                Id = Guid.NewGuid().ToString(),
+                FromAirport = TravelLocationPicker.SelectedFromAirport,
+                ToAirport = TravelLocationPicker.SelectedToAirport,
+                Cabin = GetCabinClassFromPicker(),
+                DepartingOn = DepartingDatePicker.GetDateRange(),
+                ReturningOn = ReturningDatePicker.GetDateRange(),
+                Email = EmailInput.Text,
+            };
+
+            OnAddFlight?.Invoke(entry);
+        }
+        else
+        {
+            ShowErrorMessage(Constants.EmailErrorMessage);
+        }
     }
 
     private void EmailInput_TextChanged(object sender, TextChangedEventArgs e)
     {
         var email = (sender as TextBox)?.Text;
-        AddFlightButton.IsEnabled = email != null && EmailChecker.IsValidEmail(email);
+        if (email != null && EmailChecker.IsValidEmail(email) && email.Length > 0)
+        {
+            HideErrorMessage();
+        }
     }
 
     private void ShowErrorMessage(string message)
     {
         ErrorPanel.Visibility = Visibility.Visible;
         ErrorMessage.Text = message;
+        AddFlightButton.IsEnabled = false;
     }
 
     private void HideErrorMessage()
     {
         ErrorPanel.Visibility = Visibility.Collapsed;
+        AddFlightButton.IsEnabled = true;
     }
 }
