@@ -10,8 +10,8 @@ public partial class BookingDetailEntry : UserControl
     public Action<FlightEntryToScanRequest> OnAddFlight;
     private struct Constants
     {
-        public const string DepartingDatePickerTitle = "Departing On";
-        public const string ReturningDatePickerTitle = "Returning On";
+        public const string DepartingDatePickerTitle = "Departure Date";
+        public const string ReturningDatePickerTitle = "Return Date";
         public const string AirportChosenErrorMessage = "Departure and arrival airports must be different.";
         public const string EmailErrorMessage = "Please enter a valid email address";
         public const string DatePickerErrorMessage =

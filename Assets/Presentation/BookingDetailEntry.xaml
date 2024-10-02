@@ -26,7 +26,7 @@
         <presentation:TravelLocationPicker x:Name="TravelLocationPicker" Grid.Row="0" Grid.ColumnSpan="2"/>
 
         <!-- Label for Cabin -->
-        <TextBlock Grid.Row="1" Text="Cabin" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"
+        <TextBlock Grid.Row="1" Text="Travel Class" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"
                    VerticalAlignment="Center" Grid.ColumnSpan="2"/>
 
         <!-- ComboBox for selecting class -->
@@ -42,7 +42,7 @@
 
         <!-- Email Input Field and Label (Now in row 4) -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
-            <TextBlock Text="Email:" FontSize="14" VerticalAlignment="Center" Margin="5" />
+            <TextBlock Text="Notification Email" FontSize="14" VerticalAlignment="Center" Margin="5" />
             <TextBox Name="EmailInput" Width="200" VerticalAlignment="Center" TextChanged="EmailInput_TextChanged"/>
         </StackPanel>
 
@@ -54,6 +54,6 @@
         </StackPanel>
 
         <!-- Button to add flight -->
-        <Button Grid.Row="6" Content="Add Flight" Margin="10" VerticalAlignment="Center" Click="AddFlightButtonClick" Grid.ColumnSpan="2" Name="AddFlightButton" IsEnabled="False" />
+        <Button Grid.Row="6" Content="Add Flight to Watchlist" Margin="10" VerticalAlignment="Center" Click="AddFlightButtonClick" Grid.ColumnSpan="2" Name="AddFlightButton" IsEnabled="False" />
     </Grid>
 </UserControl>

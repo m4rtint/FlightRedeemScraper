@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- TextBlock for Departing Label -->
-        <TextBlock x:Name="DepartingTextBlock" Text="Departing On" VerticalAlignment="Center" Margin="0,10,10,0"
+        <TextBlock x:Name="DepartingTextBlock" Text="Departure Date" VerticalAlignment="Center" Margin="0,10,10,0"
                    FontWeight="Bold" Grid.Column="0"
                    TextWrapping="Wrap" Width="80" TextAlignment="Center" /> <!-- Settings for wrapping -->
 
@@ -28,8 +28,8 @@
 
         <!-- Vertical StackPanel for CheckBox and Flex Label -->
         <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Flex" FontWeight="Bold" HorizontalAlignment="Center" />
-            <CheckBox Name="toggleVisibility" IsChecked="True" VerticalAlignment="Center" Margin="10,0,0,0" />
+            <TextBlock Text="Flexible Dates?" FontWeight="Bold" HorizontalAlignment="Center" />
+            <CheckBox Name="toggleVisibility" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" />
         </StackPanel>
     </Grid>
 </UserControl>

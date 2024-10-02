@@ -10,22 +10,22 @@
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="From Destination" Binding="{Binding FromAirport}" Width="*" />
-                <DataGridTextColumn Header="To Destination" Binding="{Binding ToAirport}" Width="*" />
-                <DataGridTextColumn Header="Cabin Class" Binding="{Binding CabinClass}" Width="*" />
-                <DataGridTextColumn Header="Departure Date"
+                <DataGridTextColumn Header="From" Binding="{Binding FromAirport}" Width="*" />
+                <DataGridTextColumn Header="To" Binding="{Binding ToAirport}" Width="*" />
+                <DataGridTextColumn Header="Class" Binding="{Binding CabinClass}" Width="*" />
+                <DataGridTextColumn Header="Departing"
                                     Binding="{Binding DepartureDate, StringFormat={}{0:MM/dd/yyyy}}" Width="*" />
-                <DataGridTextColumn Header="Return Date" Binding="{Binding ReturnDate, StringFormat={}{0:MM/dd/yyyy}}"
+                <DataGridTextColumn Header="Returning" Binding="{Binding ReturnDate, StringFormat={}{0:MM/dd/yyyy}}"
                                     Width="*" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
                 <DataGridTemplateColumn Header="Test Email" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Test Email" Click="TestEmailButton_Click" Foreground="Black" />
+                            <Button Content="Test Notification" Click="TestEmailButton_Click" Foreground="Black" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Remove" Width="Auto">
+                <DataGridTemplateColumn Header="Delete" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="X" Click="RemoveRowButton_Click" Foreground="Black" />

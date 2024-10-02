@@ -16,9 +16,9 @@
         </Grid.ColumnDefinitions>
 
         <!-- Labels for destinations -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="From Destination" FontSize="16" FontWeight="Bold"
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Departure City" FontSize="16" FontWeight="Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="To Destination" FontSize="16" FontWeight="Bold"
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Arrival City" FontSize="16" FontWeight="Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <!-- Top row drop-downs -->
