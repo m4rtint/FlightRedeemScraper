@@ -13,7 +13,7 @@ namespace CathayScraperApp;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private const int RepeatScrapesInMinutes = 1;
+    private const int RepeatScrapesInSeconds = 10;
     private MainWindowViewModel _viewModel;
     private readonly Polling _polling;
 
@@ -27,7 +27,7 @@ public partial class MainWindow : Window
         {
             _ = _viewModel?.LoadStoredFlightEntryRequest();
         };
-        _polling = new Polling(intervalInMinutes: RepeatScrapesInMinutes);
+        _polling = new Polling(intervalInSeconds: RepeatScrapesInSeconds);
     }
     
     private void SetupBookingDetailEntry()

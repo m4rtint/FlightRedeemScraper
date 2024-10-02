@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 public class CathayRedeemEndpoint
 {
     //https://api.cathaypacific.com/afr/search/availability/en.HKG.YVR.bus.CX.1.20240426.20241023.json
-    public async Task<CathayDTO> Execute(string origin, string destination, string cabinClass)
+    public async Task<CathayDTO> Execute(string origin, string destination, string cabinClass, string fromYear, string toYear)
     {
         try
         {
             var url =
-                $"https://api.cathaypacific.com/afr/search/availability/en.{origin}.{destination}.{cabinClass}.CX.1.20240101.20241223.json";
+                $"https://api.cathaypacific.com/afr/search/availability/en.{origin}.{destination}.{cabinClass}.CX.1.{fromYear}0101.{toYear}1231.json";
             DebugLogger.Log("URL: " + url);
 
             using (var httpClient = new HttpClient())

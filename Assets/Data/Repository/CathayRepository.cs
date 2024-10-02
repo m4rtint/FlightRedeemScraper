@@ -22,15 +22,24 @@ public class CathayRepository(ICathayApi api)
         var destination = request.ToAirport.ToString();
         var cabin = MapToDTO(request.Cabin);
         
-        var resultsToDestination = await api.GetCathayRedeem(
+        var departureResults = await GetCathayRedeemData(request.DepartingOn, origin, destination, cabin);
+        var returnResults = await GetCathayRedeemData(request.ReturningOn, origin, destination, cabin);
+        
+        return MapToDomain(departureResults, returnResults);
+    }
+
+    private async Task<AvailabilitiesDTO> GetCathayRedeemData(DateRange range, string origin, string destination, string cabin)
+    {
+        var highestYearDepartureFromDate = range.FromDate.Year.ToString();
+        var highestYearDepartureToDate = (range.ToDate?.Year ?? range.FromDate.Year).ToString();
+        var results = await api.GetCathayRedeem(
             origin,
             destination,
-            cabin);
-        var resultsReturn = await api.GetCathayRedeem(
-            destination,
-            origin,
-            cabin);
-        return MapToDomain(resultsToDestination.availabilities, resultsReturn.availabilities);
+            cabin, 
+            highestYearDepartureFromDate, 
+            highestYearDepartureToDate);
+
+        return results.availabilities;
     }
 
     private CathayRedeemData? MapToDomain(AvailabilitiesDTO dtoToDestination, AvailabilitiesDTO dtoReturn)

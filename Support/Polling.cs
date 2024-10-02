@@ -7,15 +7,15 @@ public class Polling
     private readonly double _intervalInMilliseconds;
     private bool _isPolling;
 
-    // Constructor takes polling interval in minutes
-    public Polling(double intervalInMinutes)
+    // Constructor takes polling interval in seconds
+    public Polling(double intervalInSeconds)
     {
-        _intervalInMilliseconds = intervalInMinutes * 60 * 1000; // Convert minutes to milliseconds
+        _intervalInMilliseconds = intervalInSeconds * 1000; // Convert seconds to milliseconds
         _isPolling = false;
     }
 
     // Start polling and execute the provided async action
-    public void StartPolling(Func<Task> asyncAction)
+    public async void StartPolling(Func<Task> asyncAction)
     {
         if (_isPolling)
         {
@@ -33,6 +33,10 @@ public class Polling
         _timer.AutoReset = false; // We manually restart the timer after each task is done.
         _timer.Enabled = true;
         _isPolling = true;
+
+        // Run the asyncAction immediately on start
+        await asyncAction();
+        _timer.Start();
     }
 
     // Stop polling
