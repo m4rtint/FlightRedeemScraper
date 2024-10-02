@@ -37,19 +37,19 @@ public partial class FlightDatePicker : UserControl
     {
         StartDateChanged?.Invoke(this, StartDatePicker.SelectedDate);
 
-        if (StartDatePicker.SelectedDate.HasValue && EndDatePicker.SelectedDate.HasValue)
-            if (StartDatePicker.SelectedDate > EndDatePicker.SelectedDate)
-                // Set EndDate to StartDate if StartDate is later than EndDate
-                EndDatePicker.SelectedDate = StartDatePicker.SelectedDate;
+        if (StartDatePicker.SelectedDate.HasValue && 
+            EndDatePicker.SelectedDate.HasValue && 
+            StartDatePicker.SelectedDate > EndDatePicker.SelectedDate) // Set EndDate to StartDate if StartDate is later than EndDate
+            EndDatePicker.SelectedDate = StartDatePicker.SelectedDate;
     }
 
     private void EndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
         EndDateChanged?.Invoke(this, EndDatePicker.SelectedDate);
 
-        if (EndDatePicker.SelectedDate.HasValue && StartDatePicker.SelectedDate.HasValue)
-            if (EndDatePicker.SelectedDate < StartDatePicker.SelectedDate)
-                // Set StartDate to EndDate if EndDate is earlier than StartDate
-                StartDatePicker.SelectedDate = EndDatePicker.SelectedDate;
+        if (EndDatePicker.SelectedDate.HasValue && 
+            StartDatePicker.SelectedDate.HasValue && 
+            EndDatePicker.SelectedDate < StartDatePicker.SelectedDate) // Set StartDate to EndDate if EndDate is earlier than StartDate
+            StartDatePicker.SelectedDate = EndDatePicker.SelectedDate;
     }
 }

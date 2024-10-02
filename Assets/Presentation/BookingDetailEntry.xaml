@@ -13,8 +13,8 @@
             <RowDefinition Height="Auto"/>  <!-- Row 1: Label for Cabin -->
             <RowDefinition Height="Auto"/>  <!-- Row 2: ComboBox for Cabin Class -->
             <RowDefinition Height="Auto"/>  <!-- Row 3: DatePickers and Labels -->
-            <RowDefinition Height="Auto"/>  <!-- Row 4: Error Notification -->
-            <RowDefinition Height="Auto"/>  <!-- Row 5: Email Input Field and Label -->
+            <RowDefinition Height="Auto"/>  <!-- Row 4: Email Input Field and Label -->
+            <RowDefinition Height="Auto"/>  <!-- Row 5: Error Notification (Moved here) -->
             <RowDefinition Height="Auto"/>  <!-- Row 6: Button Add Flight -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -40,17 +40,17 @@
                                 StartDateChanged="ReturningDatePicker_StartDateChanged"
                                 Grid.Column="1" />
 
-        <!-- Error Notification Row -->
-        <StackPanel x:Name="ErrorPanel" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
-            <TextBlock Text="⚠" FontSize="20" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" />
-            <TextBlock Text=" Returning Date is earlier than departure" FontSize="14" Foreground="Red"
-                       VerticalAlignment="Center" Margin="5,0,0,0" />
-        </StackPanel>
-
-        <!-- Email Input Field and Label -->
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+        <!-- Email Input Field and Label (Now in row 4) -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
             <TextBlock Text="Email:" FontSize="14" VerticalAlignment="Center" Margin="5" />
             <TextBox Name="EmailInput" Width="200" VerticalAlignment="Center" TextChanged="EmailInput_TextChanged" />
+        </StackPanel>
+
+        <!-- Error Notification Row (Moved to row 5) -->
+        <StackPanel x:Name="ErrorPanel" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Text="⚠" FontSize="20" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" />
+            <TextBlock x:Name="ErrorMessage" Text=" Returning Date is earlier than departure" FontSize="14" Foreground="Red"
+                       VerticalAlignment="Center" Margin="5,0,0,0" />
         </StackPanel>
 
         <!-- Button to add flight -->

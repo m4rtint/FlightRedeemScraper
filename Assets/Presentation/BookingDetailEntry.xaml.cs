@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using CathayDomain;
 using CathayScraperApp.Assets.Presentation.Mappers;
@@ -12,6 +13,10 @@ public partial class BookingDetailEntry : UserControl
     {
         public const string DepartingDatePickerTitle = "Departing On";
         public const string ReturningDatePickerTitle = "Returning On";
+        public const string AirportChosenErrorMessage = "Departure and arrival airports must be different.";
+
+        public const string DatePickerErrorMessage =
+            "Returning date must be after the departing date and within the departing date range.";
     }
     
     public BookingDetailEntry()
@@ -19,16 +24,42 @@ public partial class BookingDetailEntry : UserControl
         InitializeComponent();
         SetupDatePicker();
         SetupCabinPicker();
+        TravelLocationPicker.TravelLocationChanged += TravelLocationPickerOnTravelLocationChanged;
     }
 
-    private void ReturningDatePicker_StartDateChanged(object sender, DateTime? newDate)
+    private void TravelLocationPickerOnTravelLocationChanged(object? sender, EventArgs e)
     {
-        UpdateUIOnDateChanged();
+        var fromSelected = TravelLocationPicker.FromDestinationPicker.SelectedItem;
+        var toSelected = TravelLocationPicker.ToDestinationPicker.SelectedItem;
+
+        if (fromSelected.Equals(toSelected))
+        {
+            ShowErrorMessage(Constants.AirportChosenErrorMessage);
+        }
+        else
+        {
+            HideErrorMessage();
+        }
+    }
+
+    private void ReturningDatePicker_StartDateChanged(object? sender, DateTime? newDate)
+    {
+        CheckForIncorrectDates();
     }
 
     private void DepartingDatePicker_StartDateChanged(object? sender, DateTime? e)
     {
-        UpdateUIOnDateChanged();
+        CheckForIncorrectDates();
+    }
+    
+    private void DepartingDatePicker_EndDateChanged(object? sender, DateTime? e)
+    {
+        CheckForIncorrectDates();
+    }
+    
+    private void ReturningDatePicker_EndDateChanged(object? sender, DateTime? e)
+    {
+        CheckForIncorrectDates();
     }
     
     private void SetupDatePicker()
@@ -38,6 +69,12 @@ public partial class BookingDetailEntry : UserControl
 
         ReturningDatePicker.SetLabel(Constants.ReturningDatePickerTitle);
         ReturningDatePicker.SetStartDate(DateTime.Today.AddDays(10));
+        
+        DepartingDatePicker.StartDateChanged += DepartingDatePicker_StartDateChanged;
+        DepartingDatePicker.EndDateChanged += DepartingDatePicker_EndDateChanged;
+    
+        ReturningDatePicker.StartDateChanged += ReturningDatePicker_StartDateChanged;
+        ReturningDatePicker.EndDateChanged += ReturningDatePicker_EndDateChanged;
     }
 
     private void SetupCabinPicker()
@@ -85,16 +122,20 @@ public partial class BookingDetailEntry : UserControl
         return CabinClass.Economy;
     }
 
-    private void UpdateUIOnDateChanged()
+    private void CheckForIncorrectDates()
     {
         var departingRange = DepartingDatePicker.GetDateRange();
         var returningRange = ReturningDatePicker.GetDateRange();
-
-        if (returningRange.FromDate < departingRange.FromDate || returningRange.FromDate < departingRange.ToDate)
+        
+        if (returningRange.FromDate <= departingRange.FromDate ||
+            (departingRange.ToDate.HasValue && returningRange.FromDate <= departingRange.ToDate.Value))
         {
-            ErrorPanel.Visibility = Visibility.Visible;
+            ShowErrorMessage(Constants.DatePickerErrorMessage);
         }
-        ErrorPanel.Visibility = Visibility.Collapsed;
+        else
+        {
+            HideErrorMessage();
+        }
     }
 
     private void AddFlightButtonClick(object sender, RoutedEventArgs e)
@@ -117,5 +158,16 @@ public partial class BookingDetailEntry : UserControl
     {
         var email = (sender as TextBox)?.Text;
         AddFlightButton.IsEnabled = email != null && EmailChecker.IsValidEmail(email);
+    }
+
+    private void ShowErrorMessage(string message)
+    {
+        ErrorPanel.Visibility = Visibility.Visible;
+        ErrorMessage.Text = message;
+    }
+
+    private void HideErrorMessage()
+    {
+        ErrorPanel.Visibility = Visibility.Collapsed;
     }
 }

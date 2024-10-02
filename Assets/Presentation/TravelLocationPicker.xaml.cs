@@ -8,7 +8,7 @@ namespace CathayScraperApp.Assets.Presentation;
 public partial class TravelLocationPicker : UserControl
 {
     private readonly AirportToStringConverter _airportToStringConverter = new();
-
+    public event EventHandler TravelLocationChanged;
     public Airport SelectedFromAirport => (Airport)FromDestinationPicker.SelectedItem;
     public Airport SelectedToAirport => (Airport)ToDestinationPicker.SelectedItem;
     
@@ -16,6 +16,13 @@ public partial class TravelLocationPicker : UserControl
     {
         InitializeComponent();
         PopulateComboBoxes();
+        FromDestinationPicker.SelectionChanged += OnTravelLocationChanged;
+        ToDestinationPicker.SelectionChanged += OnTravelLocationChanged;
+    }
+    
+    private void OnTravelLocationChanged(object sender, EventArgs e)
+    {
+        TravelLocationChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void PopulateComboBoxes()
