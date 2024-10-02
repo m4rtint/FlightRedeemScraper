@@ -73,13 +73,13 @@ public class MainWindowPresentationMapper
 
     private string MapToDateRange(DateRange dateRange)
     {
-        string result = $"{dateRange.FromDate:dd/MM/yyyy}";
+        string result = $"{dateRange.FromDate:dd MMM yyyy}\n";
+    
         if (dateRange.ToDate.HasValue)
         {
-            result += $" - {dateRange.ToDate:dd/MM/yyyy}";
+            result += $"{dateRange.ToDate:dd MMM yyyy}";
         }
 
         return result;
     }
-
 }
