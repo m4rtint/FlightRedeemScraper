@@ -152,6 +152,7 @@ public partial class BookingDetailEntry : UserControl
                 Email = EmailInput.Text,
             };
 
+            EmailInput.Clear();
             OnAddFlight?.Invoke(entry);
         }
         else
