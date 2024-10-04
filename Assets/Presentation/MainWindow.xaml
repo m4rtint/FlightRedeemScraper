@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>  <!-- Row 2: Label for table -->
             <RowDefinition Height="Auto"/>  <!-- Row 3: Table (DataGrid) -->
             <RowDefinition Height="Auto"/>  <!-- Row 4: Debug TextBox -->
-            <RowDefinition Height="*"/>     <!-- Row 5: Results TextBoxes -->
+            <RowDefinition Height="Auto"/>  <!-- Row 5: Removed Results TextBoxes -->
             <RowDefinition Height="Auto"/>  <!-- Row 6: Buttons -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -36,11 +36,7 @@
 
         <!-- Debug Log TextBox -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" Name="DebugTextBox" TextWrapping="Wrap" Text="Debug Logs" VerticalScrollBarVisibility="Auto" IsReadOnly="true"/>
-
-        <!-- Text Boxes for additional results -->
-        <TextBox Grid.Row="5" Grid.Column="0" Margin="10" Name="LeftResults" TextWrapping="Wrap" Text="Results" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Margin="10" Name="RightResults" TextWrapping="Wrap" Text="Details" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
-
+        
         <!-- Buttons for operations -->
         <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="LeftButton" Content="Start Scraping" Margin="5"/>
         <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="RightButton" Content="Stop Scraping" Margin="5"/>

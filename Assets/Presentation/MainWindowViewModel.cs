@@ -15,6 +15,7 @@ public class MainWindowViewModel
     private readonly GetFlightsToScanUseCase _getFlightsToScanUseCase;
     private readonly DeleteFlightRequestUseCase _deleteFlightRequestUseCase;
     private readonly EmailMessageBuilder _emailMessageBuilder;
+    private readonly IsApiKeyAvailableUseCase _isApiKeyAvailableUseCase;
     private MainWindowState _state;
 
     private MainWindowState State
@@ -37,7 +38,8 @@ public class MainWindowViewModel
         GetFlightsToScanUseCase getFlightsToScanUseCase,
         DeleteFlightRequestUseCase deleteFlightRequestUseCase,
         MainWindowPresentationMapper mainWindowPresentationMapper,
-        EmailMessageBuilder emailMessageBuilder)
+        EmailMessageBuilder emailMessageBuilder,
+        IsApiKeyAvailableUseCase isApiKeyAvailableUseCase)
     {
         _getRedeemDataUseCase = getRedeemDataUseCase;
         _sendEmailUseCase = sendEmailUseCase;
@@ -47,6 +49,7 @@ public class MainWindowViewModel
         _deleteFlightRequestUseCase = deleteFlightRequestUseCase;
         _mainWindowPresentationMapper = mainWindowPresentationMapper;
         _emailMessageBuilder = emailMessageBuilder;
+        _isApiKeyAvailableUseCase = isApiKeyAvailableUseCase;
         _cancellationTokenSource = new CancellationTokenSource();
         State = MainWindowState.InitialState();
     }
@@ -144,6 +147,11 @@ public class MainWindowViewModel
             DebugLogger.Log("Found Seats and Sending Email: " + request.Email);
             await _sendEmailUseCase.Execute(request.Email, subject, message, htmlMessage);
         }
+    }
+
+    public bool IsApiKeyAvailable()
+    {
+        return _isApiKeyAvailableUseCase.Execute();
     }
     
     ~MainWindowViewModel()

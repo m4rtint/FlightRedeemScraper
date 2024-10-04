@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Windows;
 using CathayScraperApp.Assets.Domain.UseCases;
 
@@ -13,14 +14,16 @@ public partial class APIKeyVerificationWindow : Window
             new VerifyAPIKeyUseCase(
                 new MailRepository(
                     new MailAPI())));
+        DoneButton.IsEnabled = false;
+        StatusLabel.Visibility = Visibility.Collapsed;
+        this.Closing += APIKeyVerificationWindow_Closing;
     }
 
     private async void VerifyButton_Click(object sender, RoutedEventArgs e)
     {
-        // Get the API key from the input field
+        StatusLabel.Visibility = Visibility.Visible;
         string apiKey = InputTextBox.Text;
 
-        // Update the label to indicate that verification is in progress
         StatusLabel.Content = "Verifying API Key...";
 
         try
@@ -32,22 +35,28 @@ public partial class APIKeyVerificationWindow : Window
             if (isValid)
             {
                 StatusLabel.Content = "API Key is valid!";
+                DoneButton.IsEnabled = true;
             }
             else
             {
                 StatusLabel.Content = "Invalid API Key.";
+                DoneButton.IsEnabled = false;
             }
         }
         catch (Exception ex)
         {
-            // Handle any exceptions that may occur during the async task
             StatusLabel.Content = $"Error: {ex.Message}";
         }
     }
 
     private void DoneButton_Click(object sender, RoutedEventArgs e)
     {
-        // Close the window when Done is clicked
         this.Close();
+    }
+    
+    private void APIKeyVerificationWindow_Closing(object sender, CancelEventArgs e)
+    {
+        // Shut down the entire application when the window is closed
+        Application.Current.Shutdown();
     }
 }

@@ -67,6 +67,7 @@ public partial class MainWindow : Window
         var deleteFlightRequestUseCase = new DeleteFlightRequestUseCase(flightRequestRepository);
         var presentationMapper = new MainWindowPresentationMapper();
         var emailMessageBuilder = new EmailMessageBuilder();
+        var isApiKeyAvailable = new IsApiKeyAvailableUseCase();
         _viewModel = new MainWindowViewModel(
             getRedeemDataUseCase: getRedeemDataUseCase,
             sendEmailUseCase: sendEmailUseCase,
@@ -75,8 +76,15 @@ public partial class MainWindow : Window
             getFlightsToScanUseCase: getFlightsToScan,
             deleteFlightRequestUseCase: deleteFlightRequestUseCase,
             mainWindowPresentationMapper: presentationMapper,
-            emailMessageBuilder: emailMessageBuilder);
+            emailMessageBuilder: emailMessageBuilder, 
+            isApiKeyAvailableUseCase: isApiKeyAvailable);
         _viewModel.OnStateChanged += OnStateChanged;
+
+        if (!_viewModel.IsApiKeyAvailable())
+        {
+            APIKeyVerificationWindow apiKeyWindow = new APIKeyVerificationWindow();
+            apiKeyWindow.ShowDialog();
+        }
     }
 
     private void SetupDebugLog()
@@ -96,38 +104,19 @@ public partial class MainWindow : Window
 
     private void RenderState(MainWindowState state)
     {
-        var leftResults = "";
-        foreach (var item in state.AvailabilityToDestinationRows) leftResults += $"{item.Date} : {item.Availability}\n";
-        LeftResults.Text = leftResults;
-
-
-        var rightResults = "";
-        foreach (var item in state.AvailabilityReturnRows) rightResults += $"{item.Date} : {item.Availability}\n";
-        RightResults.Text = rightResults;
-
         FlightDetailsDataGrid.SetDetails(state.FlightToScanRows);
     }
 
     private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
-        ShowInputDialog();
-        /*
         _polling.StartPolling(async () =>
         {
             await _viewModel.Scrape();
         });
-        */
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         _polling.StopPolling();
     }
-    
-    private void ShowInputDialog()
-    {
-        APIKeyVerificationWindow apiKeyWindow = new APIKeyVerificationWindow();
-        apiKeyWindow.ShowDialog();
-    }
-
 }
