@@ -13,7 +13,7 @@ namespace CathayScraperApp;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private const int RepeatScrapesInSeconds = 10;
+    private const int RepeatScrapesInSeconds = 60*15;
     private MainWindowViewModel _viewModel;
     private readonly Polling _polling;
 
