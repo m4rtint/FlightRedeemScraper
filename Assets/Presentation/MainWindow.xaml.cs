@@ -110,14 +110,24 @@ public partial class MainWindow : Window
 
     private void StartScrapingButtonClick(object sender, RoutedEventArgs e)
     {
+        ShowInputDialog();
+        /*
         _polling.StartPolling(async () =>
         {
             await _viewModel.Scrape();
         });
+        */
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         _polling.StopPolling();
     }
+    
+    private void ShowInputDialog()
+    {
+        APIKeyVerificationWindow apiKeyWindow = new APIKeyVerificationWindow();
+        apiKeyWindow.ShowDialog();
+    }
+
 }
