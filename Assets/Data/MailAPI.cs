@@ -5,4 +5,10 @@
         var endpoint = new SendEmailEndpont();
         await endpoint.SendEmail(to, subject, message, htmlMessage);
     }
+
+    public async Task<bool> VerifyAPI(string api)
+    {
+        var endpoint = new VerifyMailGunApiEndpoint();
+        return await endpoint.VerifyApi(apiKey: api);
+    }
 }

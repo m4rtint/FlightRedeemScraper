@@ -1,6 +1,8 @@
-﻿namespace CathayScraperApp.Assets.Domain.UseCases;
+﻿using CathayScraperApp.Assets.Domain.Repository;
 
-public class SendEmailUseCase(MailRepository repository)
+namespace CathayScraperApp.Assets.Domain.UseCases;
+
+public class SendEmailUseCase(IMailRepository repository)
 {
     private const string TestSubject = "Flight Scraper Test Email";
 
