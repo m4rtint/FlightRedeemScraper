@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Threading;
 using CathayDomain;
 using CathayScraperApp.Assets.Data;
 using CathayScraperApp.Assets.Data.Repository;
@@ -16,7 +17,10 @@ public partial class MainWindow : Window
     private const int RepeatScrapesInSeconds = 60*15;
     private MainWindowViewModel _viewModel;
     private readonly Polling _polling;
-
+    private DispatcherTimer _countdownTimer;
+    private int _secondsRemaining;
+    
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -29,6 +33,7 @@ public partial class MainWindow : Window
         };
         _polling = new Polling(intervalInSeconds: RepeatScrapesInSeconds);
         SetButtonStates(isScraping: false);
+        SetupCountdownTimer();
     }
     
     private void SetupBookingDetailEntry()
@@ -36,6 +41,28 @@ public partial class MainWindow : Window
         BookingDetailEntry.OnAddFlight = HandleOnAddFlight;
         FlightDetailsDataGrid.OnDeleteFlight = HandleOnDeleteFlight;
         FlightDetailsDataGrid.OnTestSendEmail = HandleTestSendEmail;
+    }
+    
+    private void SetupCountdownTimer()
+    {
+        _countdownTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        _countdownTimer.Tick += CountdownTimer_Tick;
+    }
+    
+    private void CountdownTimer_Tick(object sender, EventArgs e)
+    {
+        if (_secondsRemaining > 0)
+        {
+            _secondsRemaining--;
+            CountdownLabel.Content = $"Next poll in: {TimeSpan.FromSeconds(_secondsRemaining):mm\\:ss}";
+        }
+        else
+        {
+            _countdownTimer.Stop();
+        }
     }
 
     private async void HandleOnAddFlight(FlightEntryToScanRequest flightEntryToScanRequest)
@@ -115,17 +142,26 @@ public partial class MainWindow : Window
             await _viewModel.Scrape();
         });
         SetButtonStates(isScraping: true);
+        ResetCountdownTimer();
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         _polling.StopPolling();
         SetButtonStates(isScraping: false);
+        CountdownLabel.Content = "Polling not active";
+        _countdownTimer.Stop();
     }
 
     private void SetButtonStates(bool isScraping)
     {
         StartScrapeButton.IsEnabled = !isScraping;
         StopScrapeButton.IsEnabled = isScraping;
+    }
+    
+    private void ResetCountdownTimer()
+    {
+        _secondsRemaining = RepeatScrapesInSeconds;
+        _countdownTimer.Start();
     }
 }

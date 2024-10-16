@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>  <!-- Row 4: Debug TextBox -->
             <RowDefinition Height="Auto"/>  <!-- Row 5: Removed Results TextBoxes -->
             <RowDefinition Height="Auto"/>  <!-- Row 6: Buttons -->
+            <RowDefinition Height="Auto"/>  <!-- Row 7: Countdown Timer Label -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -40,5 +41,8 @@
         <!-- Buttons for operations -->
         <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="StartScrapeButton" Content="Start Scraping" Margin="5"/>
         <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="StopScrapeButton" Content="Stop Scraping" Margin="5"/>
+        
+        <!-- Countdown Timer Label -->
+        <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Name="CountdownLabel" Content="Next poll in: 00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
     </Grid>
 </Window>
