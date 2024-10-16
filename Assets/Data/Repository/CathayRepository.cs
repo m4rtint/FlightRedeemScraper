@@ -23,7 +23,7 @@ public class CathayRepository(ICathayApi api)
         var cabin = MapToDTO(request.Cabin);
         
         var departureResults = await GetCathayRedeemData(request.DepartingOn, origin, destination, cabin);
-        var returnResults = await GetCathayRedeemData(request.ReturningOn, origin, destination, cabin);
+        var returnResults = await GetCathayRedeemData(request.ReturningOn, destination, origin, cabin);
         
         return MapToDomain(departureResults, returnResults);
     }
