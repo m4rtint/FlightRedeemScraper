@@ -38,7 +38,7 @@
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" Name="DebugTextBox" TextWrapping="Wrap" Text="Debug Logs" VerticalScrollBarVisibility="Auto" IsReadOnly="true"/>
         
         <!-- Buttons for operations -->
-        <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="LeftButton" Content="Start Scraping" Margin="5"/>
-        <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="RightButton" Content="Stop Scraping" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="StartScrapeButton" Content="Start Scraping" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="StopScrapeButton" Content="Stop Scraping" Margin="5"/>
     </Grid>
 </Window>

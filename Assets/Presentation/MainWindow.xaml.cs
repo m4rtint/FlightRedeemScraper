@@ -28,6 +28,7 @@ public partial class MainWindow : Window
             _ = _viewModel?.LoadStoredFlightEntryRequest();
         };
         _polling = new Polling(intervalInSeconds: RepeatScrapesInSeconds);
+        SetButtonStates(isScraping: false);
     }
     
     private void SetupBookingDetailEntry()
@@ -113,10 +114,18 @@ public partial class MainWindow : Window
         {
             await _viewModel.Scrape();
         });
+        SetButtonStates(isScraping: true);
     }
     
     private void StopScrapingButtonClick(object sender, RoutedEventArgs e)
     {
         _polling.StopPolling();
+        SetButtonStates(isScraping: false);
+    }
+
+    private void SetButtonStates(bool isScraping)
+    {
+        StartScrapeButton.IsEnabled = !isScraping;
+        StopScrapeButton.IsEnabled = isScraping;
     }
 }
