@@ -12,17 +12,16 @@
             <RowDefinition Height="Auto"/>  <!-- Row 0: BookingDetailEntry -->
             <RowDefinition Height="Auto"/>  <!-- Row 1: Divider -->
             <RowDefinition Height="Auto"/>  <!-- Row 2: Label for table -->
-            <RowDefinition Height="Auto"/>  <!-- Row 3: Table (DataGrid) -->
-            <RowDefinition Height="Auto"/>  <!-- Row 4: Debug TextBox -->
-            <RowDefinition Height="Auto"/>  <!-- Row 5: Removed Results TextBoxes -->
-            <RowDefinition Height="Auto"/>  <!-- Row 6: Buttons -->
-            <RowDefinition Height="Auto"/>  <!-- Row 7: Countdown Timer Label -->
+            <RowDefinition Height="Auto"/>  <!-- Row 3: FlightDetailsDataGrid -->
+            <RowDefinition Height="*"/>     <!-- Row 4: Scrollable Debug TextBox -->
+            <RowDefinition Height="Auto"/>  <!-- Row 5: Buttons -->
+            <RowDefinition Height="Auto"/>  <!-- Row 6: Countdown Timer Label -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- BookingDetailEntry UserControl -->
         <presentation:BookingDetailEntry x:Name="BookingDetailEntry" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
@@ -32,17 +31,19 @@
         <!-- Label for table -->
         <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Flights Being Scanned" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <!-- Place the UserControl in your layout -->
+        <!-- FlightDetailsDataGrid UserControl (Fixed) -->
         <presentation:FlightDetailsDataGrid x:Name="FlightDetailsDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <!-- Debug Log TextBox -->
-        <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" Name="DebugTextBox" TextWrapping="Wrap" Text="Debug Logs" VerticalScrollBarVisibility="Auto" IsReadOnly="true"/>
-        
+        <!-- ScrollViewer for the Debug TextBox -->
+        <ScrollViewer Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" VerticalScrollBarVisibility="Auto">
+            <TextBox Name="DebugTextBox" TextWrapping="Wrap" Text="Debug Logs" IsReadOnly="true"/>
+        </ScrollViewer>
+
         <!-- Buttons for operations -->
-        <Button Grid.Row="6" Grid.Column="0" Click="StartScrapingButtonClick" Name="StartScrapeButton" Content="Start Scraping" Margin="5"/>
-        <Button Grid.Row="6" Grid.Column="1" Click="StopScrapingButtonClick" Name="StopScrapeButton" Content="Stop Scraping" Margin="5"/>
-        
+        <Button Grid.Row="5" Grid.Column="0" Click="StartScrapingButtonClick" Name="StartScrapeButton" Content="Start Scraping" Margin="5"/>
+        <Button Grid.Row="5" Grid.Column="1" Click="StopScrapingButtonClick" Name="StopScrapeButton" Content="Stop Scraping" Margin="5"/>
+
         <!-- Countdown Timer Label -->
-        <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Name="CountdownLabel" Content="Next poll in: 00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+        <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Name="CountdownLabel" Content="Next poll in: 00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
     </Grid>
 </Window>
