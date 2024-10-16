@@ -10,10 +10,12 @@ public partial class APIKeyVerificationWindow : Window
     public APIKeyVerificationWindow()
     {
         InitializeComponent();
+        var storeApiKeyUseCase = new StoreApiKeyUseCase();
         _viewModel = new APIKeyVerificationViewModel(
-            new VerifyAPIKeyUseCase(
-                new MailRepository(
-                    new MailAPI())));
+                        new VerifyAPIKeyUseCase(
+                            new MailRepository(
+                                new MailAPI())),
+                        storeApiKeyUseCase);
         DoneButton.IsEnabled = false;
         StatusLabel.Visibility = Visibility.Collapsed;
         this.Closing += APIKeyVerificationWindow_Closing;
@@ -35,6 +37,7 @@ public partial class APIKeyVerificationWindow : Window
             if (isValid)
             {
                 StatusLabel.Content = "API Key is valid!";
+                _viewModel.Store(apiKey);
                 DoneButton.IsEnabled = true;
             }
             else
@@ -51,7 +54,15 @@ public partial class APIKeyVerificationWindow : Window
 
     private void DoneButton_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        if (DoneButton.IsEnabled)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+        else
+        {
+            Close();
+        }
     }
     
     private void APIKeyVerificationWindow_Closing(object sender, CancelEventArgs e)
