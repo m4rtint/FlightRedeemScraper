@@ -2,7 +2,7 @@
 
 public static class DebugLogger
 {
-    private static readonly CircularBuffer<string> circularBuffer = new(6);
+    private static readonly CircularBuffer<string> circularBuffer = new(Int32.MaxValue / 2);
 
     public static event Action<string[]> OnLogChanged;
 

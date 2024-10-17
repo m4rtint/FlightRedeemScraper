@@ -139,6 +139,7 @@ public partial class MainWindow : Window
     {
         _polling.StartPolling(async () =>
         {
+            ResetCountdownTimer();
             await _viewModel.Scrape();
         });
         SetButtonStates(isScraping: true);
