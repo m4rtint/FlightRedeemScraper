@@ -17,6 +17,8 @@ public class DefaultFlightRequestRepository(FlightEntryAPI api): IFlightRequestR
             Cabin = entry.Cabin.ToString(),
             DepartingOn = entry.DepartingOn,
             ReturningOn = entry.ReturningOn,
+            DepartingTime = entry.DepartingTime.ToString(),
+            ReturningTime = entry.ReturningTime.ToString(),
             Email = entry.Email
         }).ToArray();
 

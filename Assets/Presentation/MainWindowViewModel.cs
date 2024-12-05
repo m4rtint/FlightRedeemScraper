@@ -65,7 +65,7 @@ public class MainWindowViewModel
                 var data = await _getRedeemDataUseCase.Execute(request);
                 if (data != null)
                 {
-                    await SendEmail(data, request);
+                    await SendEmailIfPossible(data, request);
                 }
                 else
                 {
@@ -127,10 +127,10 @@ public class MainWindowViewModel
         await _sendEmailUseCase.ExecuteTest(email);
     }
  
-    private async Task SendEmail(CathayRedeemData data, FlightEntryToScanRequest request)
+    private async Task SendEmailIfPossible(CathayRedeemData data, FlightEntryToScanRequest request)
     {
-        var departures = _checkAvailabilityUseCase.Execute(request.DepartingOn, data.AvailabilityDestination);
-        var returns = _checkAvailabilityUseCase.Execute(request.ReturningOn, data.AvailabilityReturn);
+        var departures = _checkAvailabilityUseCase.Execute(request.DepartingOn, request.DepartingTime, data.AvailabilityDestination);
+        var returns = _checkAvailabilityUseCase.Execute(request.ReturningOn, request.ReturningTime, data.AvailabilityReturn);
         if (departures.Length > 0 || returns.Length > 0)
         {
             var message = _emailMessageBuilder.GeneratePlainTextEmail(

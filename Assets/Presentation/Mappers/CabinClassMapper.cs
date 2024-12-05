@@ -4,7 +4,6 @@ namespace CathayScraperApp.Assets.Presentation.Mappers;
 
 public static class CabinClassMapper
 {
-
     public static CabinClass[] GetAll()
     {
         return (CabinClass[])Enum.GetValues(typeof(CabinClass));

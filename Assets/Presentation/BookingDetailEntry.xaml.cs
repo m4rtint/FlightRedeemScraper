@@ -23,6 +23,7 @@ public partial class BookingDetailEntry : UserControl
         InitializeComponent();
         SetupDatePicker();
         SetupCabinPicker();
+        SetupTimePicker();
         TravelLocationPicker.TravelLocationChanged += TravelLocationPickerOnTravelLocationChanged;
     }
 
@@ -102,6 +103,57 @@ public partial class BookingDetailEntry : UserControl
         }
     }
     
+    private void SetupTimePicker()
+    {
+        foreach(var time in TimeMapper.GetAll())
+        {
+            ReturnTimePicker.Items.Add(new ComboBoxItem
+            {
+                Content = TimeMapper.MapToString(time)
+            });
+            
+            DepartureTimePicker.Items.Add(new ComboBoxItem
+            {
+                Content = TimeMapper.MapToString(time)
+            });
+        }
+        
+        SetTime(Time.AnyTime, ReturnTimePicker);
+        SetTime(Time.AnyTime, DepartureTimePicker);
+    }
+    
+    private void SetTime(Time time, ComboBox comboBox)
+    {
+        foreach (var item in comboBox.Items)
+        {
+            if (item is ComboBoxItem comboBoxItem && 
+                comboBoxItem.Content.ToString() == TimeMapper.MapToString(time))
+            {
+                comboBox.SelectedItem = comboBoxItem;
+                break;
+            }
+        }
+    }
+    
+    private Time GetTimeFromPicker(ComboBox comboBox)
+    {
+        if (comboBox.SelectedItem is ComboBoxItem selectedItem)
+        {
+            string? selectedContent = selectedItem.Content.ToString();
+            if (selectedContent != null)
+            {
+                return TimeMapper.FromString(selectedContent);
+            }
+            DebugLogger.Log("No time selected or incorrect item type.");
+        }
+        else
+        {
+            DebugLogger.Log("No time selected or incorrect item type.");
+        }
+
+        return Time.AnyTime;
+    }
+    
     private CabinClass GetCabinClassFromPicker()
     {
         if (CabinClassPicker.SelectedItem is ComboBoxItem selectedItem)
@@ -149,6 +201,8 @@ public partial class BookingDetailEntry : UserControl
                 Cabin = GetCabinClassFromPicker(),
                 DepartingOn = DepartingDatePicker.GetDateRange(),
                 ReturningOn = ReturningDatePicker.GetDateRange(),
+                DepartingTime = GetTimeFromPicker(DepartureTimePicker),
+                ReturningTime = GetTimeFromPicker(ReturnTimePicker),
                 Email = EmailInput.Text,
             };
 
