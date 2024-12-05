@@ -13,15 +13,13 @@
             <RowDefinition Height="Auto"/>  <!-- Row 1: Label for Cabin -->
             <RowDefinition Height="Auto"/>  <!-- Row 2: ComboBox for Cabin Class -->
             <RowDefinition Height="Auto"/>  <!-- Row 3: DatePickers and Labels -->
-            <RowDefinition Height="Auto"/>  <!-- Row 4: Time Pickers -->
-            <RowDefinition Height="50"/>    <!-- Row 5: Spacer -->
-            <RowDefinition Height="Auto"/>  <!-- Row 6: Email Input Field and Label -->
-            <RowDefinition Height="Auto"/>  <!-- Row 7: Error Notification -->
-            <RowDefinition Height="Auto"/>  <!-- Row 8: Button Add Flight -->
+            <RowDefinition Height="Auto"/>  <!-- Row 4: Email Input Field and Label -->
+            <RowDefinition Height="Auto"/>  <!-- Row 5: Error Notification (Moved here) -->
+            <RowDefinition Height="Auto"/>  <!-- Row 6: Button Add Flight -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/> 
         </Grid.ColumnDefinitions>
 
         <!-- TravelLocationPicker at the top -->
@@ -42,38 +40,20 @@
                                 StartDateChanged="ReturningDatePicker_StartDateChanged"
                                 Grid.Column="1" />
 
-        <!-- Time Pickers spanning full width -->
-        <Grid Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="Departure Time:" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" Padding="10,0,0,0" Grid.Column="0"/>
-            <ComboBox Name="DepartureTimePicker" HorizontalAlignment="Stretch" Margin="10,0" Grid.Column="1"/>
-            <TextBlock Text="Return Time:" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="20,0,10,0" HorizontalAlignment="Center" Grid.Column="2"/>
-            <ComboBox Name="ReturnTimePicker" HorizontalAlignment="Stretch" Grid.Column="3"/>
-        </Grid>
-
-        <!-- Spacer Row -->
-        <!-- Row 5 is the spacer row with a fixed height of 50px -->
-
-        <!-- Email Input Field and Label -->
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
-            <TextBlock Text="Notification Email:" FontSize="14" VerticalAlignment="Center" Margin="5" />
+        <!-- Email Input Field and Label (Now in row 4) -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Text="Notification Email" FontSize="14" VerticalAlignment="Center" Margin="5" />
             <TextBox Name="EmailInput" Width="200" VerticalAlignment="Center" TextChanged="EmailInput_TextChanged"/>
         </StackPanel>
 
-        <!-- Error Notification Row -->
-        <StackPanel x:Name="ErrorPanel" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+        <!-- Error Notification Row (Moved to row 5) -->
+        <StackPanel x:Name="ErrorPanel" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
             <TextBlock Text="⚠" FontSize="20" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" />
             <TextBlock x:Name="ErrorMessage" Text=" Returning Date is earlier than departure" FontSize="14" Foreground="Red"
                        VerticalAlignment="Center" Margin="5,0,0,0" />
         </StackPanel>
 
         <!-- Button to add flight -->
-        <Button Grid.Row="8" Content="Add Flight to Watchlist" Margin="10" VerticalAlignment="Center" Click="AddFlightButtonClick" Grid.ColumnSpan="2" Name="AddFlightButton" IsEnabled="False" />
+        <Button Grid.Row="6" Content="Add Flight to Watchlist" Margin="10" VerticalAlignment="Center" Click="AddFlightButtonClick" Grid.ColumnSpan="2" Name="AddFlightButton" IsEnabled="False" />
     </Grid>
 </UserControl>

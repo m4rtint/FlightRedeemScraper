@@ -21,8 +21,6 @@ public struct FlightEntryToScanRequest
     public CabinClass Cabin;
     public DateRange DepartingOn;
     public DateRange ReturningOn;
-    public Time DepartingTime;
-    public Time ReturningTime;
     public String Email;
 }
 
@@ -45,14 +43,6 @@ public enum CabinClass
     Business,
     PremiumEconomy,
     Economy
-}
-
-public enum Time
-{
-    Morning,
-    Afternoon,
-    Evening,
-    AnyTime
 }
 
 

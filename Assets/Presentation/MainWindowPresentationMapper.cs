@@ -65,8 +65,8 @@ public class MainWindowPresentationMapper
                     [request.FromAirport],
             ToAirport = AirportMapper.AirportDisplayNames[request.ToAirport],
             CabinClass = request.Cabin.ToString(),
-            DepartureDate = MapToDateRange(request.DepartingOn) + MapToTime(request.DepartingTime),
-            ReturnDate = MapToDateRange(request.ReturningOn) + MapToTime(request.ReturningTime),
+            DepartureDate = MapToDateRange(request.DepartingOn),
+            ReturnDate = MapToDateRange(request.ReturningOn),
             Email = request.Email
         };
     }
@@ -81,22 +81,5 @@ public class MainWindowPresentationMapper
         }
 
         return result;
-    }
-
-    private string MapToTime(Time time)
-    {
-        switch (time)
-        {
-            case Time.Morning:
-                return "Morning";
-            case Time.Afternoon:
-                return "Afternoon";
-            case Time.Evening:
-                return "Evening";
-            case Time.AnyTime:
-                return "Any Time";
-            default:
-                return "Unknown";
-        }
     }
 }

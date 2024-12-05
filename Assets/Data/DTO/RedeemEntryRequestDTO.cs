@@ -10,7 +10,5 @@ public class RedeemEntryRequestDTO
     public string Cabin { get; set; }
     public DateRange DepartingOn { get; set; }
     public DateRange ReturningOn { get; set; }
-    public string DepartingTime { get; set; }
-    public string ReturningTime { get; set; }
     public string Email { get; set; }
 }
