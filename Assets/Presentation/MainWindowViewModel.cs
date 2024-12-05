@@ -145,6 +145,8 @@ public class MainWindowViewModel
                 returningFlights: returns);
             var subject = _emailMessageBuilder.GenerateAvailabilityEmailSubject(request.FromAirport, request.ToAirport, request.Cabin);
             DebugLogger.Log("Found Seats and Sending Email: " + request.Email);
+            DebugLogger.Log($"Return Flights: {_emailMessageBuilder.GenerateDebugLogAvailabilities(returns, request.Cabin.ToString())}");
+            DebugLogger.Log($"Departure Flights: {_emailMessageBuilder.GenerateDebugLogAvailabilities(departures, request.Cabin.ToString())}");
             await _sendEmailUseCase.Execute(request.Email, subject, message, htmlMessage);
         }
     }

@@ -121,5 +121,15 @@ Thank you for choosing us to assist with your travel plans. We look forward to h
         {
             return $"Flight availability from {AirportMapper.AirportDisplayNames[fromAirport]} to {AirportMapper.AirportDisplayNames[toAirport]} in {cabin} class found";
         }
+
+        public string GenerateDebugLogAvailabilities(Availability[] flights, string cabinClass)
+        {
+            var logBuilder = new StringBuilder();
+            foreach (var flight in flights)
+            {
+                logBuilder.AppendLine($"Date: {flight.Date:yyyy-MM-dd}, Cabin Class: {cabinClass}");
+            }
+            return logBuilder.ToString();
+        }
     }
 }
