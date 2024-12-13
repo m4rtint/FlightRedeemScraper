@@ -82,30 +82,32 @@ public partial class MainWindow : Window
     
     private void SetupViewModel()
     {
-        var cathayAPI = new DefaultCathayApi();
-        var flightEntryAPI = new FlightEntryAPI();
-        var cathayRepository = new CathayRepository(cathayAPI);
+        var cathayApi = new DefaultCathayApi();
+        var flightEntryApi = new FlightEntryAPI();
+        var cathayRepository = new CathayRepository(cathayApi);
         var getRedeemDataUseCase = new GetRedeemDataUseCase(cathayRepository);
 
         var mailRepository = new MailRepository(new MailAPI());
+        var rateLimitEmailRepository = new DefaultRateLimitEmailRepository();
         var sendEmailUseCase = new SendEmailUseCase(mailRepository);
-        var flightRequestRepository = new DefaultFlightRequestRepository(flightEntryAPI);
+        var flightRequestRepository = new DefaultFlightRequestRepository(flightEntryApi);
         var setFlightRequests = new AddFlightRequestUseCase(flightRequestRepository);
         var getFlightsToScan = new GetFlightsToScanUseCase(flightRequestRepository);
         var deleteFlightRequestUseCase = new DeleteFlightRequestUseCase(flightRequestRepository);
-        var presentationMapper = new MainWindowPresentationMapper();
-        var emailMessageBuilder = new EmailMessageBuilder();
-        var isApiKeyAvailable = new IsApiKeyAvailableUseCase();
+        var canSendEmailUseCase = new CanSendEmailUseCase(rateLimitEmailRepository);
+        var updateRateLimitEmailUseCase = new UpdateRateLimitEmailUseCase(rateLimitEmailRepository);
         _viewModel = new MainWindowViewModel(
             getRedeemDataUseCase: getRedeemDataUseCase,
             sendEmailUseCase: sendEmailUseCase,
+            canSendEmailUseCase: canSendEmailUseCase,
+            updateRateLimitEmailUseCase: updateRateLimitEmailUseCase,
             checkAvailabilityUseCase: new CheckAvailabilityUseCase(),
             addFlightRequestUseCase: setFlightRequests,
             getFlightsToScanUseCase: getFlightsToScan,
             deleteFlightRequestUseCase: deleteFlightRequestUseCase,
-            mainWindowPresentationMapper: presentationMapper,
-            emailMessageBuilder: emailMessageBuilder, 
-            isApiKeyAvailableUseCase: isApiKeyAvailable);
+            mainWindowPresentationMapper: new MainWindowPresentationMapper(),
+            emailMessageBuilder: new EmailMessageBuilder(), 
+            isApiKeyAvailableUseCase: new IsApiKeyAvailableUseCase());
         _viewModel.OnStateChanged += OnStateChanged;
 
         if (!_viewModel.IsApiKeyAvailable())

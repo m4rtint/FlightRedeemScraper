@@ -11,6 +11,8 @@ public class MainWindowViewModel
     private readonly GetRedeemDataUseCase _getRedeemDataUseCase;
     private readonly MainWindowPresentationMapper _mainWindowPresentationMapper;
     private readonly SendEmailUseCase _sendEmailUseCase;
+    private readonly CanSendEmailUseCase _canSendEmailUseCase;
+    private readonly UpdateRateLimitEmailUseCase _updateRateLimitEmailUseCase;
     private readonly AddFlightRequestUseCase _addFlightUseCase;
     private readonly GetFlightsToScanUseCase _getFlightsToScanUseCase;
     private readonly DeleteFlightRequestUseCase _deleteFlightRequestUseCase;
@@ -33,6 +35,8 @@ public class MainWindowViewModel
     public MainWindowViewModel(
         GetRedeemDataUseCase getRedeemDataUseCase,
         SendEmailUseCase sendEmailUseCase,
+        CanSendEmailUseCase canSendEmailUseCase,
+        UpdateRateLimitEmailUseCase updateRateLimitEmailUseCase,
         CheckAvailabilityUseCase checkAvailabilityUseCase,
         AddFlightRequestUseCase addFlightRequestUseCase,
         GetFlightsToScanUseCase getFlightsToScanUseCase,
@@ -43,6 +47,8 @@ public class MainWindowViewModel
     {
         _getRedeemDataUseCase = getRedeemDataUseCase;
         _sendEmailUseCase = sendEmailUseCase;
+        _canSendEmailUseCase = canSendEmailUseCase;
+        _updateRateLimitEmailUseCase = updateRateLimitEmailUseCase;
         _checkAvailabilityUseCase = checkAvailabilityUseCase;
         _addFlightUseCase = addFlightRequestUseCase;
         _getFlightsToScanUseCase = getFlightsToScanUseCase;
@@ -133,6 +139,11 @@ public class MainWindowViewModel
         var returns = _checkAvailabilityUseCase.Execute(request.ReturningOn, data.AvailabilityReturn);
         if (departures.Length > 0 || returns.Length > 0)
         {
+            if (!_canSendEmailUseCase.Execute(request))
+            {
+                return;
+            }
+            _updateRateLimitEmailUseCase.Execute(request.Id);
             var message = _emailMessageBuilder.GeneratePlainTextEmail(
                 email: request.Email, 
                 cabinClass: request.Cabin.ToString(),
