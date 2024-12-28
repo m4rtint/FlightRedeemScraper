@@ -9,16 +9,6 @@ public static class CabinClassMapper
     {
         return (CabinClass[])Enum.GetValues(typeof(CabinClass));
     }
-    
-    public static CabinClass FromString(string cabinClass)
-    {
-        if (Enum.TryParse(cabinClass, true, out CabinClass cabinClassCode))
-        {
-            return cabinClassCode;
-        }
-
-        throw new ArgumentException("Invalid Cabin Class code", nameof(cabinClass));
-    }
 
     public static String MapToString(CabinClass cabinClass)
     {
@@ -37,5 +27,23 @@ public static class CabinClassMapper
                 return "Unknown"; // Add a default return value to avoid missing returns.
         }
     }
-
+    
+    public static CabinClass MapToDomain(string cabinClassString)
+    {
+        switch (cabinClassString)
+        {
+            case "Business":
+                return CabinClass.Business;
+            case "First":
+                return CabinClass.First;
+            case "PremiumEconomy":
+            case "Premium Economy":
+                return CabinClass.PremiumEconomy;
+            case "Economy":
+                return CabinClass.Economy;
+            default:
+                DebugLogger.Log("Unexpected cabin class string: " + cabinClassString);
+                return CabinClass.Economy; // Assuming there is an Unknown value in the CabinClass enum.
+        }
+    }
 }

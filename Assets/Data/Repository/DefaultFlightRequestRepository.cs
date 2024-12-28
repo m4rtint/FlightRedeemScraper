@@ -41,7 +41,7 @@ public class DefaultFlightRequestRepository(FlightEntryAPI api): IFlightRequestR
                 Id = dto.Id,
                 FromAirport = AirportMapper.FromString(dto.FromAirport),
                 ToAirport = AirportMapper.FromString(dto.ToAirport),
-                Cabin = CabinClassMapper.FromString(dto.Cabin),
+                Cabin = CabinClassMapper.MapToDomain(dto.Cabin),
                 DepartingOn = dto.DepartingOn,
                 ReturningOn = dto.ReturningOn,
                 Email = dto.Email

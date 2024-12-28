@@ -109,7 +109,7 @@ public partial class BookingDetailEntry : UserControl
             string? selectedContent = selectedItem.Content.ToString();
             if (selectedContent != null)
             {
-                return CabinClassMapper.FromString(selectedContent);
+                return CabinClassMapper.MapToDomain(selectedContent);
             }
             DebugLogger.Log("No cabin class selected or incorrect item type.");
         }
